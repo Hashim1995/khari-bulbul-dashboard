@@ -1,0 +1,28 @@
+.treeTableContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .treeTableHeader {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1em;
+
+    .treeTableIconContainer {
+      display: flex;
+      gap: 0.5em;
+
+      .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        cursor: pointer;
+        color: var(--color);
+      }
+    }
+  }
+
+  .treeTablePagination {
+    align-self: flex-end;
+  }
+}

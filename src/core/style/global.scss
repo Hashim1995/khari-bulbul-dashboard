@@ -1,0 +1,285 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+* {
+  font-family: 'Montserrat';
+}
+
+.box {
+  width: 100%;
+  width: 100%;
+  padding: 0 !important;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.4s ease 0s;
+  .ant-card-body {
+    padding: 10px;
+  }
+}
+
+.box-bordered {
+  width: 100%;
+  width: 100%;
+  padding: 0 !important;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.4s ease 0s;
+  border: 1px solid #cecece;
+}
+.user-dropdown {
+  width: 200px;
+  .ant-row {
+    align-items: center;
+    svg {
+      font-size: 16px;
+      margin-right: 5px;
+    }
+  }
+}
+.box-shadow {
+  box-shadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)';
+}
+.box-title {
+  padding: 8px;
+}
+.box-content {
+  padding: 12px;
+}
+
+.ant-select-selection-placeholder {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !important;
+  font-style: italic;
+  font-weight: 400 !important;
+}
+
+.ant-input::placeholder,
+.ant-picker-input > input::placeholder {
+  font-style: italic;
+}
+
+.ant-timeline-item-tail {
+  background-color: rgb(22, 119, 255);
+}
+.ant-popover-inner {
+  padding: 0 !important;
+}
+.ant-popover-title {
+  margin: 0 !important;
+}
+.ant-upload-list-item-thumbnail img {
+  object-fit: cover !important;
+}
+.ant-upload-list-item-container {
+  margin: 0 !important;
+}
+.ant-upload-select {
+  margin: 0 !important;
+}
+
+.custom-text {
+  font-size: 13px !important;
+}
+
+.ant-timeline-item-head-custom {
+  margin-top: 10px !important;
+}
+
+.ant-tabs-nav-wrap {
+  justify-content: flex-end;
+}
+
+div.notification::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+div.notification::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px grey;
+  border-radius: 5px;
+}
+
+/* Handle */
+div.notification::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 5px;
+}
+
+.row-pointer {
+  cursor: pointer !important;
+}
+
+.ant-popover-inner-content {
+  padding: 10px;
+}
+
+.file-height {
+  height: 862px !important;
+}
+
+.textTypeFileUpload {
+  display: flex;
+  align-items: initial;
+  border: 1px dashed #e6e1e1;
+  padding: 10px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+}
+
+.ant-modal-confirm {
+  top: 200px !important;
+}
+
+.ant-image-error {
+  width: 100% !important;
+}
+
+.ant-skeleton {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
+  justify-content: start;
+}
+
+// .ant-menu-submenu:has(> .ant-menu-sub) > .ant-menu-submenu-title {
+//   color: #fff;
+// }
+// .ant-menu-submenu-vertical .ant-menu-item-icon circle,
+// .ant-menu-submenu-vertical .ant-menu-item-icon path {
+//   color: #fff;
+// }
+// .ant-menu-submenu-popup .ant-menu-item {
+//   color: #000;
+// }
+
+.confirmModalDark {
+  .ant-modal-content {
+    background: #1f1f1f !important;
+    color: #fff !important;
+  }
+
+  .ant-modal-body {
+    background-color: #1f1f1f;
+  }
+
+  .ant-modal-confirm-title {
+    color: #fff !important;
+  }
+  .ant-modal-confirm-content {
+    // background: #1f1f1f !important;
+    color: #fff !important;
+  }
+}
+
+.no-border-end {
+  border-inline-end: 0px !important;
+  border-radius: 8px !important;
+}
+
+.ant-menu-inline > .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: #008080;
+}
+
+.ant-menu-submenu-title:hover {
+  color: #fff !important;
+}
+
+.ant-menu-vertical > .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: #008080;
+}
+
+.ant-menu-item {
+  transition: 0 !important;
+}
+
+.ant-menu-item:hover {
+  transition: 0 !important;
+}
+
+// .drawer-to-left {
+//   .ant-drawer > .ant-drawer-content-wrapper {
+//     left: -101px !important;
+//   }
+// }
+
+.align-center-breadcrump > ol {
+  align-items: center;
+}
+
+.ant-picker-ranges {
+  gap: 10px !important;
+}
+
+.generalModal .ant-modal-content .ant-modal-footer,
+.generalModal .ant-modal-content .ant-modal-body,
+.generalModal .ant-modal-content .ant-modal-header,
+.confirmModal .ant-modal-content {
+  padding: 14px !important;
+}
+
+.generalModal .ant-modal-content .ant-modal-close {
+  width: fit-content;
+}
+
+.editor-class {
+  min-height: 200px;
+}
+.ck-editor_editable:not(.ck-editor_nested-editable) {
+  min-height: 200px;
+}
+
+.jodit-ui-group__video,
+.jodit-toolbar-button_image,
+.jodit-status-bar,
+.jodit-toolbar-button_image,
+.jodit-toolbar-button_dots,
+.jodit-ui-group_group_source,
+.jodit-toolbar-button_speechRecognize,
+.jodit-status-bar,
+.jodit-toolbar-button_image,
+.jodit-ui-group_group_info,
+.jodit-toolbar-button_fullsize {
+  display: none !important;
+}
+
+.checkbox-item {
+  .ant-row {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+// .ant-checkbox-checked .ant-checkbox-inner{
+//   width: 30px;
+//   height: 30px;
+
+// }
+
+// .ant-checkbox-inner::after {
+//   width: 13.714286px;
+//   height: 23.142857px;
+// }
+
+// .ant-checkbox-inner,
+// .ant-checkbox-input {
+//   transform: scale(1.5);
+// }
+
+.antd-upload-width {
+  .ant-upload-select {
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,96 @@
+:root {
+  --color: #141414;
+  --bgColor: #fff;
+}
+
+.darkMode {
+  --color: #fff;
+  --bgColor: #141414;
+}
+
+.h-screen {
+  height: 100vh;
+}
+.h-full {
+  height: 100% !important;
+}
+.text-center {
+  text-align: center;
+}
+.w-full {
+  width: 100% !important;
+}
+.mb-10 {
+  margin-bottom: 1rem;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.mt-10 {
+  margin-top: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: end;
+}
+.py-2 {
+  padding: 1rem 0;
+}
+
+.px-2 {
+  padding: 0 1rem;
+}
+
+.gap-2 {
+  gap: 1rem;
+}
+
+.h-auto {
+  height: auto;
+}
+.box-margin-top {
+  margin-top: 15px;
+}
+.box-margin-bottom {
+  margin-bottom: 15px;
+}
+.box-margin-y {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
