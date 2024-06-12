@@ -81,7 +81,8 @@ function EditBookModal({
         showOnFirstScreen: data.showOnFirstScreen,
         coverPhoto: data?.coverPhoto
           ? data?.coverPhoto
-          : fileList[0]?.id ?? null
+          : fileList[0]?.id ?? null,
+        postType: 1
       };
 
       if (contentState?.length < 50) {

@@ -9,10 +9,10 @@ const RegisterPage = React.lazy(
 const HomePage = React.lazy(() => import('@/modules/home/pages/index'));
 const LayoutPage = React.lazy(() => import('@core/layout/layout'));
 
-const BooksPage = React.lazy(() => import('@/modules/books/pages'));
 const SettingsPage = React.lazy(() => import('@/modules/settings/pages'));
 
 const BlogsPage = React.lazy(() => import('@/modules/blogs/pages'));
+const EventsPage = React.lazy(() => import('@/modules/events/pages'));
 const GalleryPage = React.lazy(() => import('@/modules/gallery/pages'));
 const EmailsPage = React.lazy(() => import('@/modules/emails/pages'));
 const NewsSubscribersPage = React.lazy(
@@ -46,20 +46,20 @@ const routes = [
           </Suspense>
         )
       },
-      {
-        path: '/books',
-        element: (
-          <Suspense fallback={<FallbackSpinner />}>
-            {' '}
-            <BooksPage />
-          </Suspense>
-        )
-      },
+
       {
         path: '/blogs',
         element: (
           <Suspense fallback={<FallbackSpinner />}>
             <BlogsPage />
+          </Suspense>
+        )
+      },
+      {
+        path: '/events',
+        element: (
+          <Suspense fallback={<FallbackSpinner />}>
+            <EventsPage />
           </Suspense>
         )
       },

@@ -23,5 +23,5 @@ export const selectPlaceholderText = (t?: string): string =>
 export const languagesOptions = [
   { label: 'Az', value: 1 },
   { label: 'Eng', value: 2 },
-  { label: 'Ru', value: 3 }
+  { label: 'De', value: 3 }
 ];

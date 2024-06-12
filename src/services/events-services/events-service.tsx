@@ -5,7 +5,7 @@
 // import { IGlobalResponse } from '@/models/common';
 
 import { IGlobalResponse } from '@/models/common';
-import { IAddBlogForm, IGetBlogsResponse } from '@/modules/blogs/models';
+import { IAddEventForm, IGetEventsResponse } from '@/modules/events/models';
 import {
   ErrorCallBack,
   HttpUtil,
@@ -13,17 +13,17 @@ import {
   //   IHTTPSParams
 } from '../adapter-config/config';
 
-export class BlogsServices {
+export class EventsServices {
   // eslint-disable-next-line no-use-before-define
-  private static instance: BlogsServices | null;
+  private static instance: EventsServices | null;
 
   private constructor() {}
 
-  public static getInstance(): BlogsServices {
+  public static getInstance(): EventsServices {
     if (!this.instance) {
-      BlogsServices.instance = new BlogsServices();
+      EventsServices.instance = new EventsServices();
     }
-    return BlogsServices.instance!;
+    return EventsServices.instance!;
   }
 
   // public async updateAccountigCategory(
@@ -34,11 +34,16 @@ export class BlogsServices {
   //   return res;
   // }
 
-  public async getAllBlogs(
+  public async getAllEvents(
     params: IHTTPSParams[],
     onError?: ErrorCallBack
-  ): Promise<IGetBlogsResponse> {
-    const res = await HttpUtil.get('/Post/GetAllBlogs', params, false, onError);
+  ): Promise<IGetEventsResponse> {
+    const res = await HttpUtil.get(
+      '/Post/GetAllEvents',
+      params,
+      false,
+      onError
+    );
     return res;
   }
 
@@ -55,23 +60,23 @@ export class BlogsServices {
     return res;
   }
 
-  public async addBlog(
-    body: IAddBlogForm,
+  public async addEvent(
+    body: IAddEventForm,
     onError?: ErrorCallBack
   ): Promise<IGlobalResponse> {
     const res = await HttpUtil.post('/Post', body, onError);
     return res;
   }
 
-  public async updateBlog(
-    body: IAddBlogForm,
+  public async updateEvent(
+    body: IAddEventForm,
     onError?: ErrorCallBack
   ): Promise<IGlobalResponse> {
     const res = await HttpUtil.put(`/Post`, body, onError);
     return res;
   }
 
-  public async deleteBlog(
+  public async deleteEvent(
     id: number,
     onError?: ErrorCallBack
   ): Promise<IGlobalResponse> {

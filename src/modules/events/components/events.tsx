@@ -1,7 +1,6 @@
 import { dictionary } from '@/utils/constants/dictionary';
 import { useState, useRef, useEffect } from 'react';
 import AppHandledButton from '@/components/display/button/handle-button';
-import '../styles/books.scss';
 import {
   Breadcrumb,
   Card,
@@ -14,15 +13,10 @@ import {
 } from 'antd';
 import { Link } from 'react-router-dom';
 import { HomeOutlined } from '@ant-design/icons';
-import { BooksServices } from '@/services/books-services/books-service';
+import { EventsServices } from '@/services/events-services/events-service';
+import { AiFillDelete, AiFillEdit, AiOutlinePlus } from 'react-icons/ai';
 import {
-  AiFillDelete,
-  AiFillEdit,
-  AiFillEye,
-  AiOutlinePlus
-} from 'react-icons/ai';
-import {
-  getLanguageName,
+  // getLanguageName,
   showCloseConfirmationModal
 } from '@/utils/functions/functions';
 import { ColumnsType } from 'antd/es/table';
@@ -30,49 +24,47 @@ import { toast } from 'react-toastify';
 import { IGlobalResponse } from '@/models/common';
 import { useReadLocalStorage } from 'usehooks-ts';
 import AppHandledTable from '@/components/display/table';
-import { IGetBooksResponse, IBooksItem } from '../models';
-import AddBookModal from '../modals/add-book-modal';
-import EditBookModal from '../modals/edit-book-modal';
-import ViewBook from '../modals/view-book-modal';
+import { IGetEventsResponse, IEventsItem } from '../models';
+import AddEventModal from '../modals/add-event-modal';
+import EditEventModal from '../modals/edit-event-modal';
 
-function Books() {
+function Events() {
   // const {
   //   reset,
   //   control,
   //   handleSubmit,
   //   formState: { errors }
-  // } = useForm<IBooksFilter>({
+  // } = useForm<IEventsFilter>({
   //   mode: 'onChange',
   //   defaultValues: {
   //     name: '',
-  //     author: '',
-  //     price: null,
+  //     content: '',
+  //     description: '',
   //     isActive: null
   //   }
   // });
 
   const darkMode = useReadLocalStorage('darkTheme');
-  const [selectedItem, setSelectedItem] = useState<IBooksItem>();
-  const [showAddBookModal, setShowAddBookModal] = useState<boolean>(false);
-  const [showUpdateBookModal, setShowUpdateBookModal] =
+  const [selectedItem, setSelectedItem] = useState<IEventsItem>();
+  const [showAddEventModal, setShowAddEventModal] = useState<boolean>(false);
+  const [showUpdateEventModal, setShowUpdateEventModal] =
     useState<boolean>(false);
-  const [showViewBookModal, setShowViewBookModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const [booksData, setBooksData] = useState<IBooksItem[] | null>(null);
+  const [eventsData, setEventsData] = useState<IEventsItem[] | null>(null);
   const [refreshComponent, setRefreshComponent] = useState<boolean>(false);
   const forceUpdate = useRef<number>(0);
 
-  const fetchBooksList = async () => {
+  const fetchEventsList = async () => {
     try {
       setLoading(true);
-      const res: IGetBooksResponse =
-        await BooksServices.getInstance().getAllBooks([
+      const res: IGetEventsResponse =
+        await EventsServices.getInstance().getAllEvents([
           { name: 'offset', value: page }
         ]);
       if (res?.isSuccess) {
-        setBooksData(res?.data?.data);
+        setEventsData(res?.data?.data);
         setTotalPage(res?.data?.totalDataCount);
         setLoading(false);
       } else {
@@ -86,41 +78,36 @@ function Books() {
     }
   };
 
-  const handleEditClick = (raw: IBooksItem) => {
+  const handleEditClick = (raw: IEventsItem) => {
     setSelectedItem(raw);
-    setShowUpdateBookModal(true);
+    setShowUpdateEventModal(true);
   };
 
-  const handleViewClick = (raw: IBooksItem) => {
-    setSelectedItem(raw);
-    setShowViewBookModal(true);
-  };
-
-  const deleteBook = async (id: number) => {
+  const deleteEvent = async (id: number) => {
     try {
       setLoading(true);
-      const res: IGlobalResponse = await BooksServices.getInstance().deleteBook(
-        id
-      );
+      const res: IGlobalResponse =
+        await EventsServices.getInstance().deleteEvent(id);
       if (res?.isSuccess) {
         toast.success(dictionary.az.successTxt);
-        fetchBooksList();
+        fetchEventsList();
       }
     } catch (error) {
+      console.error('error', error);
       toast.error(dictionary.az.errorOccurred);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = (raw: IBooksItem) => {
+  const handleDelete = (raw: IEventsItem) => {
     showCloseConfirmationModal({
       isDark: Boolean(darkMode),
       titleText: dictionary.az.confirmTitle,
       descriptionText: dictionary.az.deleteModal,
       okText: dictionary.az.yesTxt,
       onClose: () => {
-        deleteBook(raw?.id);
+        deleteEvent(raw?.id);
       }
     });
   };
@@ -130,7 +117,7 @@ function Books() {
       setLoading(true);
 
       const res: IGlobalResponse =
-        await BooksServices.getInstance().changeStatus(id);
+        await EventsServices.getInstance().changeStatus(id);
 
       if (res?.isSuccess) {
         setLoading(false);
@@ -155,7 +142,7 @@ function Books() {
     </Typography.Paragraph>
   );
 
-  const columns: ColumnsType<IBooksItem> = [
+  const columns: ColumnsType<IEventsItem> = [
     {
       title: dictionary.az.name,
       dataIndex: 'name',
@@ -163,42 +150,30 @@ function Books() {
       render: record => renderEllipsisText(record)
     },
     {
-      title: dictionary.az.author,
-      dataIndex: 'author',
-      key: 'author',
-      render: record => renderEllipsisText(record)
-    },
-    {
-      title: dictionary.az.description,
-      dataIndex: 'description',
-      key: 'description',
+      title: dictionary.az.content,
+      dataIndex: 'content',
+      key: 'content',
       width: '40%',
       render: record => renderEllipsisText(record)
     },
     {
-      title: dictionary.az.price,
-      dataIndex: 'price',
-      key: 'price',
-      render: (record: string) => (
-        <Typography.Paragraph
-          style={{ margin: 0 }}
-          ellipsis={{ rows: 1, tooltip: record }}
-        >
-          {`${record} AZN`}
-        </Typography.Paragraph>
-      )
-    },
-    {
       title: dictionary.az.language,
       dataIndex: 'language',
-      key: 'language',
-      render: record => renderEllipsisText(getLanguageName(record))
+      key: 'language'
+      // render: record => renderEllipsisText(getLanguageName(record))
     },
+    // {
+    //   title: dictionary.az.description,
+    //   dataIndex: 'description',
+    //   key: 'description',
+    //   width: '40%',
+    //   render: record => renderEllipsisText(record)
+    // },
     {
       title: dictionary.az.status,
       dataIndex: 'isActive',
       key: 'isActive',
-      render: (record: boolean, raw: IBooksItem) => (
+      render: (record: boolean, raw: IEventsItem) => (
         <Tooltip placement="top" title="Statusu dəyiş">
           <Switch checked={record} onChange={() => onChangeStatus(raw?.id)} />
         </Tooltip>
@@ -209,21 +184,9 @@ function Books() {
       key: 'action',
       width: 130,
       align: 'right',
-      render: (_, raw: IBooksItem) => (
+      render: (_, raw: IEventsItem) => (
         <Space size="small" align={'center'}>
           <>
-            <Tooltip placement="top" title={dictionary.az.view}>
-              <AppHandledButton
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-                size="middle"
-                icon={<AiFillEye />}
-                onClick={() => handleViewClick(raw)}
-              />
-            </Tooltip>
             <Tooltip placement="top" title={dictionary.az.edit}>
               <AppHandledButton
                 style={{
@@ -254,20 +217,20 @@ function Books() {
     }
   ];
 
-  // const onSubmit: SubmitHandler<IBooksFilter> = async (data: IBooksFilter) => {
+  // const onSubmit: SubmitHandler<IEventsFilter> = async (data: IEventsFilter) => {
   //   setCurrentPage(1);
   //   const queryParamsData: IHTTPSParams[] =
-  //     convertFormDataToQueryParams<IBooksFilter>(data);
+  //     convertFormDataToQueryParams<IEventsFilter>(data);
   //   setQueryParams(queryParamsData);
   //   setRefreshComponent(!refreshComponent);
   // };
 
   useEffect(() => {
-    fetchBooksList();
+    fetchEventsList();
   }, [page, refreshComponent]);
 
   return (
-    <div className="booksContainer">
+    <div className="eventsContainer">
       <Card size="small" className="box box-margin-y">
         <Row justify="space-between" align="middle">
           <Breadcrumb
@@ -280,7 +243,7 @@ function Books() {
                 )
               },
               {
-                title: dictionary.az.books
+                title: dictionary.az.events
               }
             ]}
           />
@@ -293,7 +256,7 @@ function Books() {
               }}
               loading={loading}
               onClick={() => {
-                setShowAddBookModal(true);
+                setShowAddEventModal(true);
               }}
               icon={<AiOutlinePlus />}
             />
@@ -304,7 +267,7 @@ function Books() {
       <Spin size="large" spinning={loading}>
         <AppHandledTable
           columns={columns}
-          data={booksData}
+          data={eventsData}
           currentPage={page}
           totalPage={totalPage}
           onChangePage={(e: number) => setCurrentPage(e)}
@@ -313,30 +276,23 @@ function Books() {
         />
       </Spin>
 
-      {showAddBookModal && (
-        <AddBookModal
-          setShowAddBookModal={setShowAddBookModal}
+      {showAddEventModal && (
+        <AddEventModal
+          setShowAddEventModal={setShowAddEventModal}
           setRefreshComponent={setRefreshComponent}
-          showAddBookModal={showAddBookModal}
+          showAddEventModal={showAddEventModal}
         />
       )}
-      {showUpdateBookModal && selectedItem && (
-        <EditBookModal
+      {showUpdateEventModal && selectedItem && (
+        <EditEventModal
           selectedItem={selectedItem}
-          setShowUpdateBookModal={setShowUpdateBookModal}
+          setShowUpdateEventModal={setShowUpdateEventModal}
           setRefreshComponent={setRefreshComponent}
-          showUpdateBookModal={showUpdateBookModal}
-        />
-      )}
-      {showViewBookModal && selectedItem && (
-        <ViewBook
-          setShowViewBookModal={setShowViewBookModal}
-          showViewBookModal={showViewBookModal}
-          selectedItem={selectedItem}
+          showUpdateEventModal={showUpdateEventModal}
         />
       )}
     </div>
   );
 }
 
-export default Books;
+export default Events;

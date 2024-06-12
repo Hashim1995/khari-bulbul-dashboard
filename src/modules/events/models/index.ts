@@ -7,7 +7,7 @@ export interface IAddProductModalOneForm {
   mainGroup: number | null;
 }
 
-export interface IBlogsItem {
+export interface IEventsItem {
   id: number;
   name: string;
   description: string;
@@ -18,7 +18,7 @@ export interface IBlogsItem {
   coverPhoto: any;
 }
 
-export interface IAddBlogForm {
+export interface IAddEventForm {
   id?: number;
   name: string;
   description: string;
@@ -29,20 +29,20 @@ export interface IAddBlogForm {
   postType: number;
 }
 
-export interface IBlogsFilter {
+export interface IEventsFilter {
   name?: string;
   description?: string;
   content?: string;
   isActive?: boolean | null;
 }
 
-export interface IBlogStatus {
+export interface IEventStatus {
   isActive: boolean;
 }
 
-export interface IGetBlogsResponse extends IGlobalResponse {
+export interface IGetEventsResponse extends IGlobalResponse {
   data: {
     totalDataCount: number;
-    data: IBlogsItem[];
+    data: IEventsItem[];
   };
 }

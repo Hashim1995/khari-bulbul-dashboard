@@ -1,132 +1,152 @@
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import AppHandledButton from '@/components/display/button/handle-button';
+import { IGlobalResponse } from '@/models/common';
 import { dictionary } from '@/utils/constants/dictionary';
 import { Col, Form, Modal, Row, UploadFile } from 'antd';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AppHandledInput from '@/components/forms/input/handled-input';
-import AppHandledTextArea from '@/components/forms/text-area/handled-text-area';
-import {
-  inputPlaceholderText,
-  languagesOptions
-} from '@/utils/constants/texts';
-// import { blogTypeOptions } from '@/utils/constants/options';
+import { inputPlaceholderText } from '@/utils/constants/texts';
 import {
   inputValidationText,
   minLengthCheck
 } from '@/utils/constants/validations';
-import { showCloseConfirmationModal } from '@/utils/functions/functions';
 import { useReadLocalStorage } from 'usehooks-ts';
-
-import { IGlobalResponse } from '@/models/common';
-import { BlogsServices } from '@/services/blogs-services/blogs-service';
+import {
+  showCloseConfirmationModal,
+  tokenizeImage
+} from '@/utils/functions/functions';
+import { EventsServices } from '@/services/events-services/events-service';
 import { toast } from 'react-toastify';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import AppHandledTextArea from '@/components/forms/text-area/handled-text-area';
 import AppHandledCheckbox from '@/components/forms/checkbox/handled-checkbox';
 import JoditEditor from 'jodit-react';
 import { toastOptions } from '@/configs/global-configs';
 import AppFileUpload from '@/components/forms/file-upload';
-import AppHandledSelect from '@/components/forms/select/handled-select';
-import { IAddBlogForm } from '../models';
+import { IAddEventForm, IEventsItem } from '../models';
 
-interface IAddBlogProps {
-  showAddBlogModal: boolean;
-  setShowAddBlogModal: Dispatch<SetStateAction<boolean>>;
+interface IUpdateEventProps {
+  selectedItem: IEventsItem;
+  showUpdateEventModal: boolean;
+  setShowUpdateEventModal: Dispatch<SetStateAction<boolean>>;
   setRefreshComponent: Dispatch<SetStateAction<boolean>>;
 }
 
-function AddBlogModal({
+function EditBookModal({
   setRefreshComponent,
-  setShowAddBlogModal,
-  showAddBlogModal
-}: IAddBlogProps) {
+  setShowUpdateEventModal,
+  showUpdateEventModal,
+  selectedItem
+}: IUpdateEventProps) {
   const {
-    formState: { errors },
     control,
     handleSubmit,
-    setValue
-  } = useForm<IAddBlogForm>({
+    setValue,
+    formState: { errors }
+  } = useForm<IAddEventForm>({
     defaultValues: {
       name: '',
-      description: '',
-      showOnFirstScreen: false,
-      language: languagesOptions[0],
-      postType: 1
+      description: ''
     },
     mode: 'onChange'
   });
 
+  const { id, name, description, content, showOnFirstScreen, coverPhoto } =
+    selectedItem;
+
   const darkMode = useReadLocalStorage('darkTheme');
   const [isFormSubmiting, setIsFormSubmiting] = useState<boolean>(false);
   const editor = useRef(null);
-  const [content, setContent] = useState('');
+  const [contentState, setContentState] = useState('');
+  const [fileList, setFileList] = useState<any>([]);
 
   const handleClose = () => {
     showCloseConfirmationModal({
       isDark: Boolean(darkMode),
       onClose: () => {
-        // If the user confirms closing, hide the add Blog modal.
-        setShowAddBlogModal(false);
+        // If the user confirms closing, hide the add Event modal.
+        setShowUpdateEventModal(false);
       }
     });
   };
 
-  const onSubmit: SubmitHandler<IAddBlogForm> = async (data: IAddBlogForm) => {
+  const onSubmit: SubmitHandler<IAddEventForm> = async (
+    data: IAddEventForm
+  ) => {
     setIsFormSubmiting(true);
 
     try {
-      // Create a payload object by extracting values from the data object, providing default values if they are undefined.
       const payload = {
+        id,
         name: data.name,
         content: data.description,
-        description: content, // the reason why content and description are switched is due to backend developer
+        description: contentState,
         showOnFirstScreen: data.showOnFirstScreen,
-        coverPhoto: data.coverPhoto,
-        isActive: true,
-        language:
-          typeof data?.language === 'object' && data.language !== null
-            ? data.language.value
-            : data.language,
-        postType: data?.postType
+        coverPhoto: data?.coverPhoto
+          ? data?.coverPhoto
+          : fileList[0]?.id ?? null,
+        postType: 2
       };
 
-      if (content?.length < 50) {
+      if (contentState?.length < 50) {
         toast.warning(
           minLengthCheck(dictionary.az.content, '50'),
           toastOptions
         );
         setIsFormSubmiting(false);
+        setShowUpdateEventModal(true);
         return;
       }
-      const res: IGlobalResponse = await BlogsServices.getInstance().addBlog(
-        payload,
-        () => setIsFormSubmiting(false)
-      );
+
+      const res: IGlobalResponse =
+        await EventsServices.getInstance().updateEvent(payload, () =>
+          setIsFormSubmiting(false)
+        );
 
       if (res.isSuccess) {
         toast.success(dictionary.az.successTxt);
-        setShowAddBlogModal(false);
+        setShowUpdateEventModal(false);
         setRefreshComponent(z => !z);
       }
-      setShowAddBlogModal(false);
-      setIsFormSubmiting(false);
     } catch (error) {
+      toast.error(dictionary.az.errorOccurred, toastOptions);
+    } finally {
+      // Whether success or failure, set isFormSubmitting to false and close the modal
       setIsFormSubmiting(false);
     }
   };
 
+  useEffect(() => {
+    setValue('name', name ?? '');
+    setValue('description', content ?? '');
+    setValue('showOnFirstScreen', showOnFirstScreen ?? '');
+    setContentState(description);
+    setValue('coverPhoto', coverPhoto.id ?? null);
+    const fetchData = async () => {
+      const file = coverPhoto;
+
+      if (file) {
+        const tokenizedFile = await tokenizeImage(file);
+        setFileList([tokenizedFile]);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Modal
       width={900}
-      style={{ top: 20 }}
       destroyOnClose
-      title={dictionary.az.addBlog}
-      open={showAddBlogModal}
+      style={{ top: 20 }}
+      title={dictionary.az.updateEvent}
+      open={showUpdateEventModal}
       onCancel={handleClose}
       cancelText={dictionary.az.closeBtn}
       okText={dictionary.az.save}
       className="generalModal"
       footer={[
         <AppHandledButton
-          form="add-blog-modal-form"
+          form="update-event-modal-form"
           type="primary"
           key="submit"
           htmlType="submit"
@@ -138,26 +158,12 @@ function AddBlogModal({
       ]}
     >
       <Form
-        id="add-blog-modal-form"
+        id="update-event-modal-form"
         layout="vertical"
-        className="addPordductTabOneContainer"
+        className="updatePordductTabOneContainer"
         onFinish={handleSubmit(onSubmit)}
       >
         <Row gutter={16}>
-          <Col span={2.5}>
-            <AppHandledSelect
-              label={dictionary.az.language}
-              name="language"
-              control={control}
-              errors={errors}
-              selectProps={{
-                // defaultValue: languagesOptions[0],
-                id: 'language',
-                className: 'w-full',
-                options: languagesOptions
-              }}
-            />
-          </Col>
           <Col span={24}>
             <div className="pb-10">
               <AppHandledInput
@@ -208,12 +214,13 @@ function AddBlogModal({
               />
             </div>
             <div className="pb-10">
-              <Form.Item label={dictionary.az.blogPhoto}>
+              <Form.Item label={dictionary.az.eventPhoto}>
                 <AppFileUpload
                   listType="picture-card"
-                  photoLabel={dictionary.az.blogPhoto}
+                  photoLabel={dictionary.az.eventPhoto}
                   accept=".jpg, .jpeg, .png, .webp"
                   length={1}
+                  defaultFileList={fileList}
                   getValues={(e: UploadFile[]) => {
                     if (e && e.length > 0) {
                       const selectedFile = e[0];
@@ -223,25 +230,27 @@ function AddBlogModal({
                       setValue('coverPhoto', null);
                     }
                   }}
-                  folderType={1}
+                  folderType={2}
                 />
               </Form.Item>
             </div>
             <AppHandledCheckbox
               label={dictionary.az.showOnFirstScreen}
+              defaultValue={showOnFirstScreen}
               name="showOnFirstScreen"
+              required
               control={control}
+              errors={errors}
               formItemProps={{
                 labelCol: { span: 6 },
                 wrapperCol: { span: 18 }
               }}
-              errors={errors}
             />
 
             <JoditEditor
               ref={editor}
-              value={content}
-              onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+              value={contentState}
+              onBlur={newContent => setContentState(newContent)} // preferred to use only this option to update the content for performance reasons
               onChange={() => {}}
             />
           </Col>
@@ -251,4 +260,4 @@ function AddBlogModal({
   );
 }
 
-export default AddBlogModal;
+export default EditBookModal;

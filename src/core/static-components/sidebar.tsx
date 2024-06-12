@@ -15,10 +15,8 @@ import { FiSettings } from 'react-icons/fi';
 import { TfiGallery } from 'react-icons/tfi';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 
-import { IoLibraryOutline } from 'react-icons/io5';
 // import { ReactComponent as Logo } from '@/assets/images/brand-logo.svg';
-import LogoAAA from '../../assets/images/lLogoAAA.png';
-import LogoAAAWhite from '../../assets/images/LogoAAAWhite.png';
+import Logo from '../../assets/images/logo.png.png';
 
 const { Sider } = Layout;
 
@@ -58,14 +56,15 @@ function Sidebar() {
       '/home',
       <TiHomeOutline size={18} />
     ),
-    getItem(
-      <Link to="/books"> {dictionary.az.books} </Link>,
-      '/books',
-      <IoLibraryOutline size={18} />
-    ),
+
     getItem(
       <Link to="/blogs"> {dictionary.az.blogs} </Link>,
       '/blogs',
+      <MdOutlineArticle size={18} />
+    ),
+    getItem(
+      <Link to="/events"> {dictionary.az.events} </Link>,
+      '/events',
       <MdOutlineArticle size={18} />
     ),
     getItem(
@@ -117,22 +116,12 @@ function Sidebar() {
           >
             {collapsed ? (
               <Link to="/home">
-                <Image
-                  src={darkMode ? LogoAAAWhite : LogoAAA}
-                  alt="log0"
-                  height={'100%'}
-                  preview={false}
-                />
+                <Image src={Logo} alt="log0" height={'100%'} preview={false} />
                 {/* <Logo height={'80%'} /> */}
               </Link>
             ) : (
               <Link to="/home">
-                <Image
-                  src={darkMode ? LogoAAAWhite : LogoAAA}
-                  alt="log0"
-                  height={'120%'}
-                  preview={false}
-                />
+                <Image src={Logo} alt="log0" height={'120%'} preview={false} />
                 {/* <Logo height={'120%'} /> */}
               </Link>
             )}

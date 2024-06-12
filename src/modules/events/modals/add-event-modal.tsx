@@ -9,7 +9,7 @@ import {
   inputPlaceholderText,
   languagesOptions
 } from '@/utils/constants/texts';
-// import { blogTypeOptions } from '@/utils/constants/options';
+// import { eventTypeOptions } from '@/utils/constants/options';
 import {
   inputValidationText,
   minLengthCheck
@@ -18,38 +18,38 @@ import { showCloseConfirmationModal } from '@/utils/functions/functions';
 import { useReadLocalStorage } from 'usehooks-ts';
 
 import { IGlobalResponse } from '@/models/common';
-import { BlogsServices } from '@/services/blogs-services/blogs-service';
+import { EventsServices } from '@/services/events-services/events-service';
 import { toast } from 'react-toastify';
 import AppHandledCheckbox from '@/components/forms/checkbox/handled-checkbox';
 import JoditEditor from 'jodit-react';
 import { toastOptions } from '@/configs/global-configs';
 import AppFileUpload from '@/components/forms/file-upload';
 import AppHandledSelect from '@/components/forms/select/handled-select';
-import { IAddBlogForm } from '../models';
+import { IAddEventForm } from '../models';
 
-interface IAddBlogProps {
-  showAddBlogModal: boolean;
-  setShowAddBlogModal: Dispatch<SetStateAction<boolean>>;
+interface IAddEventProps {
+  showAddEventModal: boolean;
+  setShowAddEventModal: Dispatch<SetStateAction<boolean>>;
   setRefreshComponent: Dispatch<SetStateAction<boolean>>;
 }
 
-function AddBlogModal({
+function AddEventModal({
   setRefreshComponent,
-  setShowAddBlogModal,
-  showAddBlogModal
-}: IAddBlogProps) {
+  setShowAddEventModal,
+  showAddEventModal
+}: IAddEventProps) {
   const {
     formState: { errors },
     control,
     handleSubmit,
     setValue
-  } = useForm<IAddBlogForm>({
+  } = useForm<IAddEventForm>({
     defaultValues: {
       name: '',
       description: '',
       showOnFirstScreen: false,
       language: languagesOptions[0],
-      postType: 1
+      postType: 2
     },
     mode: 'onChange'
   });
@@ -63,13 +63,15 @@ function AddBlogModal({
     showCloseConfirmationModal({
       isDark: Boolean(darkMode),
       onClose: () => {
-        // If the user confirms closing, hide the add Blog modal.
-        setShowAddBlogModal(false);
+        // If the user confirms closing, hide the add Event modal.
+        setShowAddEventModal(false);
       }
     });
   };
 
-  const onSubmit: SubmitHandler<IAddBlogForm> = async (data: IAddBlogForm) => {
+  const onSubmit: SubmitHandler<IAddEventForm> = async (
+    data: IAddEventForm
+  ) => {
     setIsFormSubmiting(true);
 
     try {
@@ -96,17 +98,17 @@ function AddBlogModal({
         setIsFormSubmiting(false);
         return;
       }
-      const res: IGlobalResponse = await BlogsServices.getInstance().addBlog(
+      const res: IGlobalResponse = await EventsServices.getInstance().addEvent(
         payload,
         () => setIsFormSubmiting(false)
       );
 
       if (res.isSuccess) {
         toast.success(dictionary.az.successTxt);
-        setShowAddBlogModal(false);
+        setShowAddEventModal(false);
         setRefreshComponent(z => !z);
       }
-      setShowAddBlogModal(false);
+      setShowAddEventModal(false);
       setIsFormSubmiting(false);
     } catch (error) {
       setIsFormSubmiting(false);
@@ -118,15 +120,15 @@ function AddBlogModal({
       width={900}
       style={{ top: 20 }}
       destroyOnClose
-      title={dictionary.az.addBlog}
-      open={showAddBlogModal}
+      title={dictionary.az.addEvent}
+      open={showAddEventModal}
       onCancel={handleClose}
       cancelText={dictionary.az.closeBtn}
       okText={dictionary.az.save}
       className="generalModal"
       footer={[
         <AppHandledButton
-          form="add-blog-modal-form"
+          form="add-event-modal-form"
           type="primary"
           key="submit"
           htmlType="submit"
@@ -138,7 +140,7 @@ function AddBlogModal({
       ]}
     >
       <Form
-        id="add-blog-modal-form"
+        id="add-event-modal-form"
         layout="vertical"
         className="addPordductTabOneContainer"
         onFinish={handleSubmit(onSubmit)}
@@ -208,10 +210,10 @@ function AddBlogModal({
               />
             </div>
             <div className="pb-10">
-              <Form.Item label={dictionary.az.blogPhoto}>
+              <Form.Item label={dictionary.az.eventPhoto}>
                 <AppFileUpload
                   listType="picture-card"
-                  photoLabel={dictionary.az.blogPhoto}
+                  photoLabel={dictionary.az.eventPhoto}
                   accept=".jpg, .jpeg, .png, .webp"
                   length={1}
                   getValues={(e: UploadFile[]) => {
@@ -251,4 +253,4 @@ function AddBlogModal({
   );
 }
 
-export default AddBlogModal;
+export default AddEventModal;
