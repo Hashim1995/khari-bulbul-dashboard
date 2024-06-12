@@ -13,8 +13,7 @@ import { AuthService } from '@/services/auth-services/auth-services';
 import { useNavigate } from 'react-router-dom';
 import AppHandledButton from '@/components/display/button/handle-button';
 import { mainLogo, rightSideImage } from '@/configs/theme-config';
-import LogoAAA from '@/assets/images/lLogoAAA.png';
-import LogoAAAWhite from '@/assets/images/LogoAAAWhite.png';
+import Logo from '@/assets/images/logo.png.png';
 
 function Login() {
   const {
@@ -66,11 +65,7 @@ function Login() {
           <Col span={12}>
             <Row className="w-full" align="middle" justify="center">
               <Col span={15} className="box-margin-y">
-                <img
-                  src={darkMode ? LogoAAAWhite : LogoAAA}
-                  style={mainLogo?.style}
-                  alt="mainLogo"
-                />
+                <img src={Logo} style={mainLogo?.style} alt="mainLogo" />
               </Col>
               <Col span={24}>
                 <Form

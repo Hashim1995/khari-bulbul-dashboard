@@ -71,4 +71,4 @@ export const rightSideImage: {
   style: CSSProperties;
 } = { src: rightSideImg, style: { width: '100%' } };
 
-window.document.title = 'Library';
+window.document.title = 'Khari Bülbül';
