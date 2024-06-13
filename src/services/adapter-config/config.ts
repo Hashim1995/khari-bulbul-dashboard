@@ -141,7 +141,7 @@ export class HttpUtil {
       const result = await axios.post(url, body).then(responseBody);
       return result;
     } catch (e: any) {
-      const error = new HttpError(e.response.status, axiosErrorHandler(e));
+      const error = new HttpError(e.response?.status, axiosErrorHandler(e));
       if (onError) onError!(error);
       if (error.preventDefault) {
         return null;
