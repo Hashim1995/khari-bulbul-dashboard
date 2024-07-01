@@ -60,7 +60,7 @@ function AppHandledTable({
             }
             columns={columns}
             locale={{
-              emptyText: <AppEmpty />
+              emptyText: <AppEmpty style={{height: "52vh", display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}} />
             }}
             dataSource={data}
             {...tableProps}

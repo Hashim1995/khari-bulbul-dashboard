@@ -10,9 +10,9 @@ import { TiHomeOutline } from 'react-icons/ti';
 import { dictionary } from '@/utils/constants/dictionary';
 import AppHandledButton from '@/components/display/button/handle-button';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
-import { MdOutlineArticle, MdOutlineUnsubscribe } from 'react-icons/md';
+import { MdOutlineArticle, MdOutlineUnsubscribe, MdEventNote } from 'react-icons/md';
 import { FiSettings } from 'react-icons/fi';
-import { TfiGallery } from 'react-icons/tfi';
+// import { TfiGallery } from 'react-icons/tfi';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 
 // import { ReactComponent as Logo } from '@/assets/images/brand-logo.svg';
@@ -65,13 +65,13 @@ function Sidebar() {
     getItem(
       <Link to="/events"> {dictionary.az.events} </Link>,
       '/events',
-      <MdOutlineArticle size={18} />
+      <MdEventNote size={18} />
     ),
-    getItem(
-      <Link to="/gallery"> {dictionary.az.gallery} </Link>,
-      '/gallery',
-      <TfiGallery size={18} />
-    ),
+    // getItem(
+    //   <Link to="/gallery"> {dictionary.az.gallery} </Link>,
+    //   '/gallery',
+    //   <TfiGallery size={18} />
+    // ),
     getItem(
       <Link to="/received-emails"> {dictionary.az.receivedEmails} </Link>,
       '/received-emails',

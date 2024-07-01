@@ -148,28 +148,16 @@ function Blogs() {
       title: dictionary.az.name,
       dataIndex: 'name',
       key: 'name',
+      width: '30%',
       render: record => renderEllipsisText(record)
     },
     {
       title: dictionary.az.content,
       dataIndex: 'content',
       key: 'content',
-      width: '40%',
+      width: '50%',
       render: record => renderEllipsisText(record)
     },
-    {
-      title: dictionary.az.language,
-      dataIndex: 'language',
-      key: 'language'
-      // render: record => renderEllipsisText(getLanguageName(record))
-    },
-    // {
-    //   title: dictionary.az.description,
-    //   dataIndex: 'description',
-    //   key: 'description',
-    //   width: '40%',
-    //   render: record => renderEllipsisText(record)
-    // },
     {
       title: dictionary.az.status,
       dataIndex: 'isActive',
@@ -218,13 +206,6 @@ function Blogs() {
     }
   ];
 
-  // const onSubmit: SubmitHandler<IBlogsFilter> = async (data: IBlogsFilter) => {
-  //   setCurrentPage(1);
-  //   const queryParamsData: IHTTPSParams[] =
-  //     convertFormDataToQueryParams<IBlogsFilter>(data);
-  //   setQueryParams(queryParamsData);
-  //   setRefreshComponent(!refreshComponent);
-  // };
 
   useEffect(() => {
     fetchBlogsList();

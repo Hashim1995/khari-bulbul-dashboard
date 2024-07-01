@@ -7,7 +7,6 @@ import AppHandledInput from '@/components/forms/input/handled-input';
 import AppHandledTextArea from '@/components/forms/text-area/handled-text-area';
 import {
   inputPlaceholderText,
-  languagesOptions
 } from '@/utils/constants/texts';
 // import { blogTypeOptions } from '@/utils/constants/options';
 import {
@@ -24,7 +23,6 @@ import AppHandledCheckbox from '@/components/forms/checkbox/handled-checkbox';
 import JoditEditor from 'jodit-react';
 import { toastOptions } from '@/configs/global-configs';
 import AppFileUpload from '@/components/forms/file-upload';
-import AppHandledSelect from '@/components/forms/select/handled-select';
 import { IAddBlogForm } from '../models';
 
 interface IAddBlogProps {
@@ -48,7 +46,6 @@ function AddBlogModal({
       name: '',
       description: '',
       showOnFirstScreen: false,
-      language: languagesOptions[0],
       postType: 1
     },
     mode: 'onChange'
@@ -81,10 +78,6 @@ function AddBlogModal({
         showOnFirstScreen: data.showOnFirstScreen,
         coverPhoto: data.coverPhoto,
         isActive: true,
-        language:
-          typeof data?.language === 'object' && data.language !== null
-            ? data.language.value
-            : data.language,
         postType: data?.postType
       };
 
@@ -144,20 +137,6 @@ function AddBlogModal({
         onFinish={handleSubmit(onSubmit)}
       >
         <Row gutter={16}>
-          <Col span={2.5}>
-            <AppHandledSelect
-              label={dictionary.az.language}
-              name="language"
-              control={control}
-              errors={errors}
-              selectProps={{
-                // defaultValue: languagesOptions[0],
-                id: 'language',
-                className: 'w-full',
-                options: languagesOptions
-              }}
-            />
-          </Col>
           <Col span={24}>
             <div className="pb-10">
               <AppHandledInput

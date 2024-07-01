@@ -4,7 +4,7 @@ import { Breadcrumb, Card, Row, Space } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ContactUs from './contact-us';
-import WebsiteTitles from './website-titles';
+// import WebsiteTitles from './website-titles';
 
 function Settings() {
   return (
@@ -30,7 +30,7 @@ function Settings() {
         </Row>
       </Card>
       <ContactUs />
-      <WebsiteTitles />
+      {/* <WebsiteTitles /> */}
     </div>
   );
 }
