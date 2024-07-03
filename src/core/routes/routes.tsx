@@ -13,7 +13,7 @@ const SettingsPage = React.lazy(() => import('@/modules/settings/pages'));
 
 const BlogsPage = React.lazy(() => import('@/modules/blogs/pages'));
 const EventsPage = React.lazy(() => import('@/modules/events/pages'));
-// const GalleryPage = React.lazy(() => import('@/modules/gallery/pages'));
+const GalleryPage = React.lazy(() => import('@/modules/gallery/pages'));
 const EmailsPage = React.lazy(() => import('@/modules/emails/pages'));
 const NewsSubscribersPage = React.lazy(
   () => import('@/modules/news-subscribers/pages')
@@ -71,14 +71,14 @@ const routes = [
           </Suspense>
         )
       },
-      // {
-      //   path: '/gallery',
-      //   element: (
-      //     <Suspense fallback={<FallbackSpinner />}>
-      //       <GalleryPage />
-      //     </Suspense>
-      //   )
-      // },
+      {
+        path: '/gallery',
+        element: (
+          <Suspense fallback={<FallbackSpinner />}>
+            <GalleryPage />
+          </Suspense>
+        )
+      },
       {
         path: '/received-emails',
         element: (

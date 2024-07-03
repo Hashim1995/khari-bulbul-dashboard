@@ -136,7 +136,7 @@ function EditBookModal({
       width={900}
       destroyOnClose
       style={{ top: 20 }}
-      title={dictionary.az.updateBlog}
+      title={dictionary.az.updateNews}
       open={showUpdateBlogModal}
       onCancel={handleClose}
       cancelText={dictionary.az.closeBtn}
@@ -212,10 +212,10 @@ function EditBookModal({
               />
             </div>
             <div className="pb-10">
-              <Form.Item label={dictionary.az.blogPhoto}>
+              <Form.Item label={dictionary.az.newsPhoto}>
                 <AppFileUpload
                   listType="picture-card"
-                  photoLabel={dictionary.az.blogPhoto}
+                  photoLabel={dictionary.az.newsPhoto}
                   accept=".jpg, .jpeg, .png, .webp"
                   length={1}
                   defaultFileList={fileList}

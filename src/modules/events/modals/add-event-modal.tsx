@@ -23,6 +23,8 @@ import AppHandledCheckbox from '@/components/forms/checkbox/handled-checkbox';
 import JoditEditor from 'jodit-react';
 import { toastOptions } from '@/configs/global-configs';
 import AppFileUpload from '@/components/forms/file-upload';
+import { languagesOptionsWithIcons } from '@/modules/blogs/modals/add-blog-modal';
+import AppHandledSelect from '@/components/forms/select/handled-select';
 import { IAddEventForm } from '../models';
 
 interface IAddEventProps {
@@ -46,6 +48,7 @@ function AddEventModal({
       name: '',
       description: '',
       showOnFirstScreen: false,
+      language: languagesOptionsWithIcons[0].value,
       postType: 2
     },
     mode: 'onChange'
@@ -139,6 +142,21 @@ function AddEventModal({
         onFinish={handleSubmit(onSubmit)}
       >
         <Row gutter={16}>
+        <Col span={2.5}>
+            <AppHandledSelect
+              label={dictionary.az.language}
+              name="language"
+              control={control}
+              errors={errors}
+              selectProps={{
+                // defaultValue: languagesOptions[0],
+                id: 'language',
+                className: 'w-full',
+                style: {display: 'flex', alignContent: 'center', justifyContent: 'center'},
+                options: languagesOptionsWithIcons
+              }}
+            />
+          </Col>
           <Col span={24}>
             <div className="pb-10">
               <AppHandledInput

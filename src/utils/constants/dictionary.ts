@@ -172,10 +172,13 @@ export const dictionary = {
     content: 'Məzmun',
     updateBlog: 'Məqaləni redaktə edin',
     updateEvent: 'Tədbiri redaktə edin',
+    updateNews: 'Xəbəri redaktə edin',
     addBlog: 'Məqalə əlavə edin',
     addEvent: 'Tədbir əlavə edin',
+    addNews: 'Xəbər əlavə edin',
     bookPhoto: 'Kitab şəkli',
     blogPhoto: 'Məqalənin şəkli',
+    newsPhoto: 'Xəbərin şəkli',
     eventPhoto: 'Tədbirin şəkli',
     addGallery: 'Şəkil əlavə edin',
     updateGallery: 'Şəkil redaktə edin',
@@ -205,7 +208,14 @@ export const dictionary = {
     photoGalleryContent: 'Fotoqalereya məzmunu',
     photoGalleryHeader: 'Foto Qalereya Başlıq',
     websiteTitles: 'Veb sayt başlıqları',
-    NewsSubscribers: 'Xəbərlər Abunələri'
+    NewsSubscribers: 'Xəbərlər Abunələri',
+    news: 'xəbərlər',
+    eventsContent: "Tədbirlər məzmun",
+    eventsHeader: "Tədbirlər başlıq",
+    mainContent: "Əsas məzmun",
+    mainHeader: "Əsas başlıq",
+    newsContent: "Xəbərlər məzmun",
+    newsHeader: "Xəbərlər başlıq"
   }
 };
 // export const dictionary = {

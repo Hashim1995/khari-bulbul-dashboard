@@ -38,6 +38,7 @@ function EditBookModal({
     control,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors }
   } = useForm<IAddGalleryForm>({
     defaultValues: {
@@ -208,6 +209,8 @@ function EditBookModal({
                   getValues={(e: UploadFile[]) => {
                     if (e && e.length > 0) {
                       const selectedFile = e[0];
+
+                      console.log(watch('coverPhoto'), 'selected')
                       const fileData = selectedFile?.response?.data;
                       fileData && setValue('coverPhoto', fileData?.id);
                     } else {

@@ -12,7 +12,7 @@ import AppHandledButton from '@/components/display/button/handle-button';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { MdOutlineArticle, MdOutlineUnsubscribe, MdEventNote } from 'react-icons/md';
 import { FiSettings } from 'react-icons/fi';
-// import { TfiGallery } from 'react-icons/tfi';
+import { TfiGallery } from 'react-icons/tfi';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 
 // import { ReactComponent as Logo } from '@/assets/images/brand-logo.svg';
@@ -58,7 +58,7 @@ function Sidebar() {
     ),
 
     getItem(
-      <Link to="/blogs"> {dictionary.az.blogs} </Link>,
+      <Link to="/blogs"> {dictionary.az.news} </Link>,
       '/blogs',
       <MdOutlineArticle size={18} />
     ),
@@ -67,11 +67,11 @@ function Sidebar() {
       '/events',
       <MdEventNote size={18} />
     ),
-    // getItem(
-    //   <Link to="/gallery"> {dictionary.az.gallery} </Link>,
-    //   '/gallery',
-    //   <TfiGallery size={18} />
-    // ),
+    getItem(
+      <Link to="/gallery"> {dictionary.az.gallery} </Link>,
+      '/gallery',
+      <TfiGallery size={18} />
+    ),
     getItem(
       <Link to="/received-emails"> {dictionary.az.receivedEmails} </Link>,
       '/received-emails',

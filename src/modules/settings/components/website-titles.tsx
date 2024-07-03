@@ -33,20 +33,12 @@ function WebsiteTitles() {
     defaultValues: {
       aboutUsContent: '',
       aboutUsHeader: '',
-      articleContent: '',
-      articleHeader: '',
-      bioContent: '',
-      booksContent: '',
-      booksHeader: '',
-      caruselGalleryContent: '',
-      caruselGalleryHeader: '',
-      founderContent: '',
-      founderHeader: '',
-      founderSpeciality: '',
-      newsLetterContent: '',
-      newsLetterHeader: '',
-      photoGalleryContent: '',
-      photoGalleryHeader: ''
+      eventsContent: '',
+      eventsHeader: '',
+      mainContent: '',
+      mainHeader: '',
+      newsContent: '',
+      newsHeader: '',
     }
   });
 
@@ -71,23 +63,12 @@ function WebsiteTitles() {
       if (res?.isSuccess) {
         setValue('aboutUsContent', res?.data?.aboutUsContent ?? '');
         setValue('aboutUsHeader', res?.data?.aboutUsHeader ?? '');
-        setValue('articleContent', res?.data?.articleContent ?? '');
-        setValue('articleHeader', res?.data?.articleHeader ?? '');
-        setValue('bioContent', res?.data?.bioContent ?? '');
-        setValue('booksContent', res?.data?.booksContent ?? '');
-        setValue('booksHeader', res?.data?.booksHeader ?? '');
-        setValue(
-          'caruselGalleryContent',
-          res?.data?.caruselGalleryContent ?? ''
-        );
-        setValue('caruselGalleryHeader', res?.data?.caruselGalleryHeader ?? '');
-        setValue('founderContent', res?.data?.founderContent ?? '');
-        setValue('founderHeader', res?.data?.founderHeader ?? '');
-        setValue('founderSpeciality', res?.data?.founderSpeciality ?? '');
-        setValue('newsLetterContent', res?.data?.newsLetterContent ?? '');
-        setValue('newsLetterHeader', res?.data?.newsLetterHeader ?? '');
-        setValue('photoGalleryContent', res?.data?.photoGalleryContent ?? '');
-        setValue('photoGalleryHeader', res?.data?.photoGalleryHeader ?? '');
+        setValue('eventsContent', res?.data?.eventsContent ?? '');
+        setValue('eventsHeader', res?.data?.eventsHeader ?? '');
+        setValue('mainContent', res?.data?.mainContent ?? '');
+        setValue('mainHeader', res?.data?.mainHeader ?? '');
+        setValue('newsContent', res?.data?.newsContent ?? '');
+        setValue('newsHeader', res?.data?.newsHeader ?? '');
         setSkeleton(false);
       }
     } catch (error) {
@@ -105,7 +86,7 @@ function WebsiteTitles() {
 
       if (activeTabKeyLowerCase === 'az') {
         languageCode = 1;
-      } else if (activeTabKeyLowerCase === 'ru') {
+      } else if (activeTabKeyLowerCase === 'de') {
         languageCode = 3;
       } else {
         languageCode = 2;
@@ -216,16 +197,16 @@ function WebsiteTitles() {
 
                 <Col span={12}>
                   <AppHandledInput
-                    label={dictionary.az.articleContent}
-                    name="articleContent"
+                    label={dictionary.az.eventsContent}
+                    name="eventsContent"
                     inputProps={{
-                      id: 'articleContent'
+                      id: 'eventsContent'
                     }}
                     rules={{
                       maxLength: {
                         value: 500,
                         message: maxLengthCheck(
-                          dictionary.az.articleContent,
+                          dictionary.az.eventsContent,
                           '500'
                         )
                       }
@@ -234,7 +215,7 @@ function WebsiteTitles() {
                     required={false}
                     inputType="text"
                     placeholder={inputPlaceholderText(
-                      dictionary.az.articleContent
+                      dictionary.az.eventsContent
                     )}
                     errors={errors}
                   />
@@ -242,16 +223,16 @@ function WebsiteTitles() {
 
                 <Col span={12}>
                   <AppHandledInput
-                    label={dictionary.az.articleHeader}
-                    name="articleHeader"
+                    label={dictionary.az.eventsHeader}
+                    name="eventsHeader"
                     inputProps={{
-                      id: 'articleHeader'
+                      id: 'eventsHeader'
                     }}
                     rules={{
                       maxLength: {
                         value: 200,
                         message: maxLengthCheck(
-                          dictionary.az.articleHeader,
+                          dictionary.az.eventsHeader,
                           '200'
                         )
                       }
@@ -260,7 +241,7 @@ function WebsiteTitles() {
                     required={false}
                     inputType="text"
                     placeholder={inputPlaceholderText(
-                      dictionary.az.articleHeader
+                      dictionary.az.eventsHeader
                     )}
                     errors={errors}
                   />
@@ -269,16 +250,16 @@ function WebsiteTitles() {
                 {/* Your form fields */}
                 <Col span={12}>
                   <AppHandledInput
-                    label={dictionary.az.bioContent}
-                    name="bioContent"
+                    label={dictionary.az.mainContent}
+                    name="mainContent"
                     inputProps={{
-                      id: 'bioContent'
+                      id: 'mainContent'
                     }}
                     rules={{
                       maxLength: {
                         value: 1000,
                         message: maxLengthCheck(
-                          dictionary.az.bioContent,
+                          dictionary.az.mainContent,
                           '1000'
                         )
                       }
@@ -286,23 +267,23 @@ function WebsiteTitles() {
                     control={control}
                     required={false}
                     inputType="text"
-                    placeholder={inputPlaceholderText(dictionary.az.bioContent)}
+                    placeholder={inputPlaceholderText(dictionary.az.mainContent)}
                     errors={errors}
                   />
                 </Col>
 
                 <Col span={12}>
                   <AppHandledInput
-                    label={dictionary.az.booksContent}
-                    name="booksContent"
+                    label={dictionary.az.mainHeader}
+                    name="mainHeader"
                     inputProps={{
-                      id: 'booksContent'
+                      id: 'mainHeader'
                     }}
                     rules={{
                       maxLength: {
                         value: 500,
                         message: maxLengthCheck(
-                          dictionary.az.booksContent,
+                          dictionary.az.mainHeader,
                           '500'
                         )
                       }
@@ -311,7 +292,7 @@ function WebsiteTitles() {
                     required={false}
                     inputType="text"
                     placeholder={inputPlaceholderText(
-                      dictionary.az.booksContent
+                      dictionary.az.mainHeader
                     )}
                     errors={errors}
                   />
@@ -319,16 +300,16 @@ function WebsiteTitles() {
 
                 <Col span={12}>
                   <AppHandledInput
-                    label={dictionary.az.booksHeader}
-                    name="booksHeader"
+                    label={dictionary.az.newsContent}
+                    name="newsContent"
                     inputProps={{
-                      id: 'booksHeader'
+                      id: 'newsContent'
                     }}
                     rules={{
                       maxLength: {
                         value: 200,
                         message: maxLengthCheck(
-                          dictionary.az.booksHeader,
+                          dictionary.az.newsContent,
                           '200'
                         )
                       }
@@ -337,7 +318,7 @@ function WebsiteTitles() {
                     required={false}
                     inputType="text"
                     placeholder={inputPlaceholderText(
-                      dictionary.az.booksHeader
+                      dictionary.az.newsContent
                     )}
                     errors={errors}
                   />
@@ -345,16 +326,16 @@ function WebsiteTitles() {
 
                 <Col span={12}>
                   <AppHandledInput
-                    label={dictionary.az.caruselGalleryContent}
-                    name="caruselGalleryContent"
+                    label={dictionary.az.newsHeader}
+                    name="newsHeader"
                     inputProps={{
-                      id: 'caruselGalleryContent'
+                      id: 'newsHeader'
                     }}
                     rules={{
                       maxLength: {
                         value: 500,
                         message: maxLengthCheck(
-                          dictionary.az.caruselGalleryContent,
+                          dictionary.az.newsHeader,
                           '500'
                         )
                       }
@@ -363,221 +344,12 @@ function WebsiteTitles() {
                     required={false}
                     inputType="text"
                     placeholder={inputPlaceholderText(
-                      dictionary.az.caruselGalleryContent
+                      dictionary.az.newsHeader
                     )}
                     errors={errors}
                   />
                 </Col>
 
-                {/* Your form fields */}
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.caruselGalleryHeader}
-                    name="caruselGalleryHeader"
-                    inputProps={{
-                      id: 'caruselGalleryHeader'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 200,
-                        message: maxLengthCheck(
-                          dictionary.az.caruselGalleryHeader,
-                          '200'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.caruselGalleryHeader
-                    )}
-                    errors={errors}
-                  />
-                </Col>
-
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.founderContent}
-                    name="founderContent"
-                    inputProps={{
-                      id: 'founderContent'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 1000,
-                        message: maxLengthCheck(
-                          dictionary.az.founderContent,
-                          '1000'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.founderContent
-                    )}
-                    errors={errors}
-                  />
-                </Col>
-
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.founderHeader}
-                    name="founderHeader"
-                    inputProps={{
-                      id: 'founderHeader'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 100,
-                        message: maxLengthCheck(
-                          dictionary.az.founderHeader,
-                          '100'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.founderHeader
-                    )}
-                    errors={errors}
-                  />
-                </Col>
-
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.founderSpeciality}
-                    name="founderSpeciality"
-                    inputProps={{
-                      id: 'founderSpeciality'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 100,
-                        message: maxLengthCheck(
-                          dictionary.az.founderSpeciality,
-                          '100'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.founderSpeciality
-                    )}
-                    errors={errors}
-                  />
-                </Col>
-
-                {/* Your form fields */}
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.newsLetterContent}
-                    name="newsLetterContent"
-                    inputProps={{
-                      id: 'newsLetterContent'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 500,
-                        message: maxLengthCheck(
-                          dictionary.az.newsLetterContent,
-                          '500'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.newsLetterContent
-                    )}
-                    errors={errors}
-                  />
-                </Col>
-
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.newsLetterHeader}
-                    name="newsLetterHeader"
-                    inputProps={{
-                      id: 'newsLetterHeader'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 200,
-                        message: maxLengthCheck(
-                          dictionary.az.newsLetterHeader,
-                          '200'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.newsLetterHeader
-                    )}
-                    errors={errors}
-                  />
-                </Col>
-
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.photoGalleryContent}
-                    name="photoGalleryContent"
-                    inputProps={{
-                      id: 'photoGalleryContent'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 500,
-                        message: maxLengthCheck(
-                          dictionary.az.photoGalleryContent,
-                          '500'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.photoGalleryContent
-                    )}
-                    errors={errors}
-                  />
-                </Col>
-
-                <Col span={12}>
-                  <AppHandledInput
-                    label={dictionary.az.photoGalleryHeader}
-                    name="photoGalleryHeader"
-                    inputProps={{
-                      id: 'photoGalleryHeader'
-                    }}
-                    rules={{
-                      maxLength: {
-                        value: 200,
-                        message: maxLengthCheck(
-                          dictionary.az.photoGalleryHeader,
-                          '200'
-                        )
-                      }
-                    }}
-                    control={control}
-                    required={false}
-                    inputType="text"
-                    placeholder={inputPlaceholderText(
-                      dictionary.az.photoGalleryHeader
-                    )}
-                    errors={errors}
-                  />
-                </Col>
               </Row>
               <Row justify="end">
                 <div style={{ textAlign: 'right' }}>
@@ -607,13 +379,13 @@ function WebsiteTitles() {
     <Card size="small" className="box box-margin-y">
       <div className="generalFilter">
         <Tabs defaultActiveKey="Az" onChange={handleChangeTab}>
-          <Tabs.TabPane tab="Az" key="Az">
+          <Tabs.TabPane tab="Azərbaycan" key="Az">
             {renderForm()}
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Eng" key="Eng">
+          <Tabs.TabPane tab="Ingilis" key="Eng">
             {renderForm()}
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Ru" key="Ru">
+          <Tabs.TabPane tab="Alman" key="De">
             {renderForm()}
           </Tabs.TabPane>
         </Tabs>

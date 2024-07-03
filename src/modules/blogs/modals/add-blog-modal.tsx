@@ -23,8 +23,18 @@ import AppHandledCheckbox from '@/components/forms/checkbox/handled-checkbox';
 import JoditEditor from 'jodit-react';
 import { toastOptions } from '@/configs/global-configs';
 import AppFileUpload from '@/components/forms/file-upload';
+import AppHandledSelect from '@/components/forms/select/handled-select';
+import { ReactComponent as AZ } from "../../../assets/images/Aze.svg";
+import { ReactComponent as Eng } from "../../../assets/images/Eng.svg";
+import { ReactComponent as De } from "../../../assets/images/De.svg";
 import { IAddBlogForm } from '../models';
 
+
+export const languagesOptionsWithIcons = [
+  { label: <AZ style={{ width: 20, height: 20, marginRight: 8 , marginTop: 5 }}/>, value: 1 },
+  { label: <Eng style={{ width: 20, height: 20, marginRight: 8 , marginTop: 5 }}/>, value: 2 },
+  { label: <De style={{ width: 20, height: 20, marginRight: 8 , marginTop: 5 }}/>, value: 3 }
+];
 interface IAddBlogProps {
   showAddBlogModal: boolean;
   setShowAddBlogModal: Dispatch<SetStateAction<boolean>>;
@@ -46,6 +56,7 @@ function AddBlogModal({
       name: '',
       description: '',
       showOnFirstScreen: false,
+      language: languagesOptionsWithIcons[0].value,
       postType: 1
     },
     mode: 'onChange'
@@ -106,12 +117,14 @@ function AddBlogModal({
     }
   };
 
+
+
   return (
     <Modal
       width={900}
       style={{ top: 20 }}
       destroyOnClose
-      title={dictionary.az.addBlog}
+      title={dictionary.az.addNews}
       open={showAddBlogModal}
       onCancel={handleClose}
       cancelText={dictionary.az.closeBtn}
@@ -137,6 +150,22 @@ function AddBlogModal({
         onFinish={handleSubmit(onSubmit)}
       >
         <Row gutter={16}>
+        <Col span={2.5}>
+            <AppHandledSelect
+              label={dictionary.az.language}
+              name="language"
+              control={control}
+              errors={errors}
+              selectProps={{
+                // defaultValue: languagesOptions[0],
+                id: 'language',
+                className: 'w-full',
+                style: {display: 'flex', alignContent: 'center', justifyContent: 'center'},
+                options: languagesOptionsWithIcons
+              }}
+            />
+          </Col>
+
           <Col span={24}>
             <div className="pb-10">
               <AppHandledInput
@@ -187,10 +216,10 @@ function AddBlogModal({
               />
             </div>
             <div className="pb-10">
-              <Form.Item label={dictionary.az.blogPhoto}>
+              <Form.Item label={dictionary.az.newsPhoto}>
                 <AppFileUpload
                   listType="picture-card"
-                  photoLabel={dictionary.az.blogPhoto}
+                  photoLabel={dictionary.az.newsPhoto}
                   accept=".jpg, .jpeg, .png, .webp"
                   length={1}
                   getValues={(e: UploadFile[]) => {

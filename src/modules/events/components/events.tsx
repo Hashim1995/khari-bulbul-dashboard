@@ -16,7 +16,7 @@ import { HomeOutlined } from '@ant-design/icons';
 import { EventsServices } from '@/services/events-services/events-service';
 import { AiFillDelete, AiFillEdit, AiOutlinePlus } from 'react-icons/ai';
 import {
-  // getLanguageName,
+  getLanguageName,
   showCloseConfirmationModal
 } from '@/utils/functions/functions';
 import { ColumnsType } from 'antd/es/table';
@@ -157,6 +157,13 @@ function Events() {
       width: '50%',
       render: record => renderEllipsisText(record)
     },
+    {
+      title: dictionary.az.language,
+      dataIndex: 'language',
+      key: 'language',
+      render: record => renderEllipsisText(getLanguageName(record ?? 1))
+    },
+
     {
       title: dictionary.az.status,
       dataIndex: 'isActive',

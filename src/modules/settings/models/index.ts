@@ -12,22 +12,15 @@ export interface IGetContactUsResponse extends IGlobalResponse {
 }
 
 export interface IWebsiteTitles {
-  caruselGalleryHeader: string | null;
-  caruselGalleryContent: string | null;
-  aboutUsHeader: string | null;
+
   aboutUsContent: string | null;
-  booksHeader: string | null;
-  booksContent: string | null;
-  founderHeader: string | null;
-  founderContent: string | null;
-  founderSpeciality: string | null;
-  articleHeader: string | null;
-  articleContent: string | null;
-  photoGalleryHeader: string | null;
-  photoGalleryContent: string | null;
-  newsLetterHeader: string | null;
-  newsLetterContent: string | null;
-  bioContent: string | null;
+  aboutUsHeader: string | null;
+  eventsContent: string | null;
+  eventsHeader: string | null;
+  mainContent: string | null;
+  mainHeader: string | null;
+  newsContent: string | null;
+  newsHeader: string | null;
 }
 
 export interface IGetWebsiteTitlesResponse extends IGlobalResponse {

@@ -16,7 +16,7 @@ import { HomeOutlined } from '@ant-design/icons';
 import { BlogsServices } from '@/services/blogs-services/blogs-service';
 import { AiFillDelete, AiFillEdit, AiOutlinePlus } from 'react-icons/ai';
 import {
-  // getLanguageName,
+  getLanguageName,
   showCloseConfirmationModal
 } from '@/utils/functions/functions';
 import { ColumnsType } from 'antd/es/table';
@@ -159,6 +159,13 @@ function Blogs() {
       render: record => renderEllipsisText(record)
     },
     {
+      title: dictionary.az.language,
+      dataIndex: 'language',
+      key: 'language',
+      render: record => renderEllipsisText(getLanguageName(record ?? 1))
+    },
+
+    {
       title: dictionary.az.status,
       dataIndex: 'isActive',
       key: 'isActive',
@@ -225,7 +232,7 @@ function Blogs() {
                 )
               },
               {
-                title: dictionary.az.blogs
+                title: dictionary.az.news
               }
             ]}
           />

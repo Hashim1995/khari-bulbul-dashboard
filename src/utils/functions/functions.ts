@@ -177,7 +177,7 @@ function getLanguageName(languageNumber: number): string {
     case 2:
       return 'Eng';
     case 3:
-      return 'Ru';
+      return 'De';
     default:
       throw new Error('Invalid language number');
   }
