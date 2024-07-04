@@ -1,4 +1,4 @@
-import { Layout, Menu, Image } from 'antd';
+import { Layout, Menu, Image, Typography, } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import type { MenuProps } from 'antd';
@@ -58,14 +58,49 @@ function Sidebar() {
     ),
 
     getItem(
-      <Link to="/blogs"> {dictionary.az.news} </Link>,
-      '/blogs',
-      <MdOutlineArticle size={18} />
+      <Typography.Text
+      style={{ fontFamily: 'Montserrat', display: 'block', color: "#000" }}
+      className="typography-margin-none ant-typography-inherit"
+    >
+    {dictionary.az.news}
+    </Typography.Text>,
+      'blogs',
+      <MdOutlineArticle size={18} />,
+      [
+        getItem(
+          <Link to="/blogs/published"> {dictionary.az.alreadyPublished} </Link>,
+          '/blogs/published',
+          <MdOutlineArticle size={18} />,
+        ),
+        getItem(
+          <Link to="/blogs/planned"> {dictionary.az.willBePublished} </Link>,
+          '/blogs/planned',
+          <MdOutlineArticle size={18} />,
+        )
+      ],
     ),
+
     getItem(
-      <Link to="/events"> {dictionary.az.events} </Link>,
-      '/events',
-      <MdEventNote size={18} />
+      <Typography.Text
+      style={{ fontFamily: 'Montserrat', display: 'block',  }}
+      className="typography-margin-none ant-typography-inherit"
+    >
+    {dictionary.az.events}
+    </Typography.Text>,
+      'events',
+      <MdEventNote size={18} />,
+      [
+        getItem(
+          <Link to="/events/published"> {dictionary.az.alreadyPublished} </Link>,
+          '/events/published',
+          <MdEventNote size={18} />,
+        ),
+        getItem(
+          <Link to="/events/planned"> {dictionary.az.willBePublished} </Link>,
+          '/events/planned',
+          <MdEventNote size={18} />,
+        )
+      ],
     ),
     getItem(
       <Link to="/gallery"> {dictionary.az.gallery} </Link>,
@@ -86,7 +121,9 @@ function Sidebar() {
       <Link to="/settings"> {dictionary.az.settings} </Link>,
       '/settings',
       <FiSettings size={18} />
-    )
+    ),
+  
+
   ];
 
   return (

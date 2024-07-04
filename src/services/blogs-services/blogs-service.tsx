@@ -42,6 +42,15 @@ export class BlogsServices {
     return res;
   }
 
+  public async getAllPlanedBlogs(
+    params: IHTTPSParams[],
+    onError?: ErrorCallBack
+  ): Promise<IGetBlogsResponse> {
+    const res = await HttpUtil.get('/Post/GetAllPlannedBlogs', params, false, onError);
+    return res;
+  }
+
+
   public async getExportToExcel(onError?: ErrorCallBack) {
     const res = await HttpUtil.get('/Post/export-excel', null, false, onError);
     return res;

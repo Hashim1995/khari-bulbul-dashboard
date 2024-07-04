@@ -12,7 +12,10 @@ const LayoutPage = React.lazy(() => import('@core/layout/layout'));
 const SettingsPage = React.lazy(() => import('@/modules/settings/pages'));
 
 const BlogsPage = React.lazy(() => import('@/modules/blogs/pages'));
+const BlogsPlanedPage = React.lazy(() => import('@/modules/blogs-planed/pages'));
 const EventsPage = React.lazy(() => import('@/modules/events/pages'));
+const EventsPlannedPage = React.lazy(() => import('@/modules/events-planned/pages'));
+
 const GalleryPage = React.lazy(() => import('@/modules/gallery/pages'));
 const EmailsPage = React.lazy(() => import('@/modules/emails/pages'));
 const NewsSubscribersPage = React.lazy(
@@ -49,20 +52,61 @@ const routes = [
 
       {
         path: '/blogs',
-        element: (
-          <Suspense fallback={<FallbackSpinner />}>
-            <BlogsPage />
-          </Suspense>
-        )
+        children: [
+          { path: '/blogs', element: <Navigate to="blogs" /> },
+          {
+            path: 'published',
+            key: 'published',
+            index: true,
+            element: (
+              <Suspense fallback={<FallbackSpinner />}>
+                <BlogsPage />
+              </Suspense>
+            )
+          },
+          {
+            path: 'planned',
+            key: 'planned',
+            index: true,
+            element: (
+              <Suspense fallback={<FallbackSpinner />}>
+                <BlogsPlanedPage />
+              </Suspense>
+            )
+          }
+        ]
+      
       },
+
+
       {
         path: '/events',
-        element: (
-          <Suspense fallback={<FallbackSpinner />}>
-            <EventsPage />
-          </Suspense>
-        )
+        children: [
+          { path: '/events', element: <Navigate to="events" /> },
+          {
+            path: 'published',
+            key: 'published',
+            index: true,
+            element: (
+              <Suspense fallback={<FallbackSpinner />}>
+                <EventsPage />
+              </Suspense>
+            )
+          },
+          {
+            path: 'planned',
+            key: 'planned',
+            index: true,
+            element: (
+              <Suspense fallback={<FallbackSpinner />}>
+                <EventsPlannedPage />
+              </Suspense>
+            )
+          }
+        ]
+      
       },
+      
       {
         path: '/settings',
         element: (

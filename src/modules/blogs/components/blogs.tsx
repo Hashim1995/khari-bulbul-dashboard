@@ -60,7 +60,7 @@ function Blogs() {
     try {
       setLoading(true);
       const res: IGetBlogsResponse =
-        await BlogsServices.getInstance().getAllBlogs([
+        await BlogsServices.getInstance().getAllBlogs([    // getAllPlanedBlogs
           { name: 'offset', value: page }
         ]);
       if (res?.isSuccess) {
@@ -233,6 +233,9 @@ function Blogs() {
               },
               {
                 title: dictionary.az.news
+              },
+              {
+                title: dictionary.az.alreadyPublished
               }
             ]}
           />
@@ -284,4 +287,4 @@ function Blogs() {
   );
 }
 
-export default Blogs;
+export default Blogs; 

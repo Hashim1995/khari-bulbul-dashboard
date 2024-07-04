@@ -1,7 +1,6 @@
 import { dictionary } from '@/utils/constants/dictionary';
 import { useState, useRef, useEffect } from 'react';
 import AppHandledButton from '@/components/display/button/handle-button';
-
 import {
   Breadcrumb,
   Card,
@@ -10,49 +9,63 @@ import {
   Spin,
   Switch,
   Tooltip,
-  Typography,
-  Image,
-  ConfigProvider
+  Typography
 } from 'antd';
 import { Link } from 'react-router-dom';
 import { HomeOutlined } from '@ant-design/icons';
-import { GalleryServices } from '@/services/gallery-services/gallery-service';
-import { AiFillDelete, AiOutlinePlus } from 'react-icons/ai';
-import { showCloseConfirmationModal } from '@/utils/functions/functions';
-import defaultImage from '@/assets/images/default-image.png';
+import { BlogsServices } from '@/services/blogs-services/blogs-service';
+import { AiFillDelete, AiFillEdit, AiOutlinePlus } from 'react-icons/ai';
+import {
+  getLanguageName,
+  showCloseConfirmationModal
+} from '@/utils/functions/functions';
 import { ColumnsType } from 'antd/es/table';
 import { toast } from 'react-toastify';
 import { IGlobalResponse } from '@/models/common';
 import { useReadLocalStorage } from 'usehooks-ts';
 import AppHandledTable from '@/components/display/table';
 import dayjs from 'dayjs';
-import { IGetGalleryResponse, IGalleryItem } from '../models';
-import AddGalleryModal from '../modals/add-gallery-modal';
-import EditGalleryModal from '../modals/edit-gallery-modal';
+import { IGetBlogsResponse, IBlogsItem } from '../models';
+import AddBlogModal from '../modals/add-blog-modal';
+import EditBlogModal from '../modals/edit-blog-modal';
 
-function Gallery() {
+function BlogsPlaned() {
+  // const {
+  //   reset,
+  //   control,
+  //   handleSubmit,
+  //   formState: { errors }
+  // } = useForm<IBlogsFilter>({
+  //   mode: 'onChange',
+  //   defaultValues: {
+  //     name: '',
+  //     content: '',
+  //     description: '',
+  //     isActive: null
+  //   }
+  // });
+
   const darkMode = useReadLocalStorage('darkTheme');
-  const [selectedItem, setSelectedItem] = useState<IGalleryItem>();
-  const [showAddGalleryModal, setShowAddGalleryModal] =
-    useState<boolean>(false);
-  const [showUpdateGalleryModal, setShowUpdateGalleryModal] =
+  const [selectedItem, setSelectedItem] = useState<IBlogsItem>();
+  const [showAddBlogModal, setShowAddBlogModal] = useState<boolean>(false);
+  const [showUpdateBlogModal, setShowUpdateBlogModal] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const [galleryData, setGalleryData] = useState<IGalleryItem[] | null>(null);
+  const [blogsData, setBlogsData] = useState<IBlogsItem[] | null>(null);
   const [refreshComponent, setRefreshComponent] = useState<boolean>(false);
   const forceUpdate = useRef<number>(0);
 
-  const fetchGalleryList = async () => {
+  const fetchBlogsList = async () => {
     try {
       setLoading(true);
-      const res: IGetGalleryResponse =
-        await GalleryServices.getInstance().getAllGallery([
+      const res: IGetBlogsResponse =
+        await BlogsServices.getInstance().getAllPlanedBlogs([    // getAllPlanedBlogs
           { name: 'offset', value: page }
         ]);
       if (res?.isSuccess) {
-        setGalleryData(res?.data?.data);
+        setBlogsData(res?.data?.data);
         setTotalPage(res?.data?.totalDataCount);
         setLoading(false);
       } else {
@@ -66,37 +79,37 @@ function Gallery() {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const handleEditClick = (raw: IGalleryItem) => {
+  const handleEditClick = (raw: IBlogsItem) => {
     setSelectedItem(raw);
-    setShowUpdateGalleryModal(true);
+    setShowUpdateBlogModal(true);
   };
 
-  const deleteGallery = async (id: number) => {
+  const deleteBlog = async (id: number) => {
     try {
       setLoading(true);
-      const res: IGlobalResponse =
-        await GalleryServices.getInstance().deleteGallery(id);
+      const res: IGlobalResponse = await BlogsServices.getInstance().deleteBlog(
+        id
+      );
       if (res?.isSuccess) {
         toast.success(dictionary.az.successTxt);
-        fetchGalleryList();
+        fetchBlogsList();
       }
     } catch (error) {
       console.error('error', error);
-      toast.success(dictionary.az.successTxt);
+      toast.error(dictionary.az.errorOccurred);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = (raw: IGalleryItem) => {
+  const handleDelete = (raw: IBlogsItem) => {
     showCloseConfirmationModal({
       isDark: Boolean(darkMode),
       titleText: dictionary.az.confirmTitle,
       descriptionText: dictionary.az.deleteModal,
       okText: dictionary.az.yesTxt,
       onClose: () => {
-        deleteGallery(raw?.id);
+        deleteBlog(raw?.id);
       }
     });
   };
@@ -106,7 +119,7 @@ function Gallery() {
       setLoading(true);
 
       const res: IGlobalResponse =
-        await GalleryServices.getInstance().changeStatus(id);
+        await BlogsServices.getInstance().changeStatus(id);
 
       if (res?.isSuccess) {
         setLoading(false);
@@ -131,50 +144,33 @@ function Gallery() {
     </Typography.Paragraph>
   );
 
-  const columns: ColumnsType<IGalleryItem> = [
-    {
-      title: dictionary.az.gallery,
-      dataIndex: 'coverPhoto',
-      key: 'coverPhoto',
-      width: 50,
-      render: record => (
-        <ConfigProvider
-          locale={{
-            locale: 'az',
-            Image: {
-              preview: ''
-            }
-          }}
-        >
-          <Image
-            style={{ objectFit: 'contain' }}
-            height={70}
-            width={70}
-            src={record?.fileUrl ?? defaultImage}
-            alt={record?.name ?? 'image'}
-          />
-        </ConfigProvider>
-      )
-    },
+  const columns: ColumnsType<IBlogsItem> = [
     {
       title: dictionary.az.name,
       dataIndex: 'name',
       key: 'name',
+      width: '30%',
       render: record => renderEllipsisText(record)
     },
     {
-      title: dictionary.az.description,
-      dataIndex: 'description',
-      key: 'description',
+      title: dictionary.az.content,
+      dataIndex: 'content',
+      key: 'content',
       width: '40%',
       render: record => renderEllipsisText(record)
     },
     {
+      title: dictionary.az.language,
+      dataIndex: 'language',
+      key: 'language',
+      render: record => renderEllipsisText(getLanguageName(record ?? 1))
+    },
+    {
       title: dictionary.az.createdDate,
-      dataIndex: 'createdDate',
-      key: 'createdDate',
+      dataIndex: 'plannedDate',
+      key: 'plannedDate',
       render: (date: string) => {
-        const formattedDate = dayjs(date, 'DD/MM/YYYY').format('DD.MM.YYYY');
+        const formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');
         return renderEllipsisText(formattedDate);
       }
     },
@@ -182,22 +178,21 @@ function Gallery() {
       title: dictionary.az.status,
       dataIndex: 'isActive',
       key: 'isActive',
-      render: (record: boolean, raw: IGalleryItem) => (
+      render: (record: boolean, raw: IBlogsItem) => (
         <Tooltip placement="top" title="Statusu dəyiş">
           <Switch checked={record} onChange={() => onChangeStatus(raw?.id)} />
         </Tooltip>
       )
     },
-
     {
       dataIndex: '',
       key: 'action',
       width: 130,
       align: 'right',
-      render: (_, raw: IGalleryItem) => (
+      render: (_, raw: IBlogsItem) => (
         <Space size="small" align={'center'}>
           <>
-            {/* <Tooltip placement="top" title={dictionary.az.edit}>
+            <Tooltip placement="top" title={dictionary.az.edit}>
               <AppHandledButton
                 style={{
                   display: 'flex',
@@ -208,7 +203,7 @@ function Gallery() {
                 icon={<AiFillEdit />}
                 onClick={() => handleEditClick(raw)}
               />
-            </Tooltip> */}
+            </Tooltip>
             <Tooltip placement="top" title={dictionary.az.delete}>
               <AppHandledButton
                 style={{
@@ -227,22 +222,13 @@ function Gallery() {
     }
   ];
 
-  // const onSubmit: SubmitHandler<IGalleryFilter> = async (
-  //   data: IGalleryFilter
-  // ) => {
-  //   setCurrentPage(1);
-  //   const queryParamsData: IHTTPSParams[] =
-  //     convertFormDataToQueryParams<IGalleryFilter>(data);
-  //   setQueryParams(queryParamsData);
-  //   setRefreshComponent(!refreshComponent);
-  // };
 
   useEffect(() => {
-    fetchGalleryList();
+    fetchBlogsList();
   }, [page, refreshComponent]);
 
   return (
-    <div className="galleryContainer">
+    <div className="blogsContainer">
       <Card size="small" className="box box-margin-y">
         <Row justify="space-between" align="middle">
           <Breadcrumb
@@ -255,7 +241,10 @@ function Gallery() {
                 )
               },
               {
-                title: dictionary.az.gallery
+                title: dictionary.az.news
+              },
+              {
+                title: dictionary.az.willBePublished
               }
             ]}
           />
@@ -268,7 +257,7 @@ function Gallery() {
               }}
               loading={loading}
               onClick={() => {
-                setShowAddGalleryModal(true);
+                setShowAddBlogModal(true);
               }}
               icon={<AiOutlinePlus />}
             />
@@ -279,32 +268,32 @@ function Gallery() {
       <Spin size="large" spinning={loading}>
         <AppHandledTable
           columns={columns}
-          data={galleryData}
+          data={blogsData}
           currentPage={page}
           totalPage={totalPage}
           onChangePage={(e: number) => setCurrentPage(e)}
           key={forceUpdate.current}
-          rowKey={'id'}
+          rowKey="id"
         />
       </Spin>
 
-      {showAddGalleryModal && (
-        <AddGalleryModal
-          setShowAddGalleryModal={setShowAddGalleryModal}
+      {showAddBlogModal && (
+        <AddBlogModal
+          setShowAddBlogModal={setShowAddBlogModal}
           setRefreshComponent={setRefreshComponent}
-          showAddGalleryModal={showAddGalleryModal}
+          showAddBlogModal={showAddBlogModal}
         />
       )}
-      {showUpdateGalleryModal && selectedItem && (
-        <EditGalleryModal
+      {showUpdateBlogModal && selectedItem && (
+        <EditBlogModal
           selectedItem={selectedItem}
-          setShowUpdateGalleryModal={setShowUpdateGalleryModal}
+          setShowUpdateBlogModal={setShowUpdateBlogModal}
           setRefreshComponent={setRefreshComponent}
-          showUpdateGalleryModal={showUpdateGalleryModal}
+          showUpdateBlogModal={showUpdateBlogModal}
         />
       )}
     </div>
   );
 }
 
-export default Gallery;
+export default BlogsPlaned; 

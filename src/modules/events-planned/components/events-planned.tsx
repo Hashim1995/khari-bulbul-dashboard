@@ -1,7 +1,6 @@
 import { dictionary } from '@/utils/constants/dictionary';
 import { useState, useRef, useEffect } from 'react';
 import AppHandledButton from '@/components/display/button/handle-button';
-
 import {
   Breadcrumb,
   Card,
@@ -10,49 +9,62 @@ import {
   Spin,
   Switch,
   Tooltip,
-  Typography,
-  Image,
-  ConfigProvider
+  Typography
 } from 'antd';
 import { Link } from 'react-router-dom';
 import { HomeOutlined } from '@ant-design/icons';
-import { GalleryServices } from '@/services/gallery-services/gallery-service';
-import { AiFillDelete, AiOutlinePlus } from 'react-icons/ai';
-import { showCloseConfirmationModal } from '@/utils/functions/functions';
-import defaultImage from '@/assets/images/default-image.png';
+import { EventsServices } from '@/services/events-services/events-service';
+import { AiFillDelete, AiFillEdit, AiOutlinePlus } from 'react-icons/ai';
+import {
+  getLanguageName,
+  showCloseConfirmationModal
+} from '@/utils/functions/functions';
 import { ColumnsType } from 'antd/es/table';
 import { toast } from 'react-toastify';
 import { IGlobalResponse } from '@/models/common';
 import { useReadLocalStorage } from 'usehooks-ts';
 import AppHandledTable from '@/components/display/table';
-import dayjs from 'dayjs';
-import { IGetGalleryResponse, IGalleryItem } from '../models';
-import AddGalleryModal from '../modals/add-gallery-modal';
-import EditGalleryModal from '../modals/edit-gallery-modal';
+import { IGetEventsResponse, IEventsItem } from '../models';
+import AddEventModal from '../modals/add-event-modal';
+import EditEventModal from '../modals/edit-event-modal';
 
-function Gallery() {
+function EventsPlanned() {
+  // const {
+  //   reset,
+  //   control,
+  //   handleSubmit,
+  //   formState: { errors }
+  // } = useForm<IEventsFilter>({
+  //   mode: 'onChange',
+  //   defaultValues: {
+  //     name: '',
+  //     content: '',
+  //     description: '',
+  //     isActive: null
+  //   }
+  // });
+
   const darkMode = useReadLocalStorage('darkTheme');
-  const [selectedItem, setSelectedItem] = useState<IGalleryItem>();
-  const [showAddGalleryModal, setShowAddGalleryModal] =
-    useState<boolean>(false);
-  const [showUpdateGalleryModal, setShowUpdateGalleryModal] =
+  const [selectedItem, setSelectedItem] = useState<IEventsItem>();
+  const [showAddEventModal, setShowAddEventModal] = useState<boolean>(false);
+  const [showUpdateEventModal, setShowUpdateEventModal] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const [galleryData, setGalleryData] = useState<IGalleryItem[] | null>(null);
+  const [eventsData, setEventsData] = useState<IEventsItem[] | null>(null);
   const [refreshComponent, setRefreshComponent] = useState<boolean>(false);
   const forceUpdate = useRef<number>(0);
 
-  const fetchGalleryList = async () => {
+  const fetchEventsList = async () => {
     try {
       setLoading(true);
-      const res: IGetGalleryResponse =
-        await GalleryServices.getInstance().getAllGallery([
+      const res: IGetEventsResponse =
+        await EventsServices.getInstance().getAllPlannedEvents([
           { name: 'offset', value: page }
         ]);
       if (res?.isSuccess) {
-        setGalleryData(res?.data?.data);
+        setEventsData(res?.data?.data);
         setTotalPage(res?.data?.totalDataCount);
         setLoading(false);
       } else {
@@ -66,37 +78,36 @@ function Gallery() {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const handleEditClick = (raw: IGalleryItem) => {
+  const handleEditClick = (raw: IEventsItem) => {
     setSelectedItem(raw);
-    setShowUpdateGalleryModal(true);
+    setShowUpdateEventModal(true);
   };
 
-  const deleteGallery = async (id: number) => {
+  const deleteEvent = async (id: number) => {
     try {
       setLoading(true);
       const res: IGlobalResponse =
-        await GalleryServices.getInstance().deleteGallery(id);
+        await EventsServices.getInstance().deleteEvent(id);
       if (res?.isSuccess) {
         toast.success(dictionary.az.successTxt);
-        fetchGalleryList();
+        fetchEventsList();
       }
     } catch (error) {
       console.error('error', error);
-      toast.success(dictionary.az.successTxt);
+      toast.error(dictionary.az.errorOccurred);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = (raw: IGalleryItem) => {
+  const handleDelete = (raw: IEventsItem) => {
     showCloseConfirmationModal({
       isDark: Boolean(darkMode),
       titleText: dictionary.az.confirmTitle,
       descriptionText: dictionary.az.deleteModal,
       okText: dictionary.az.yesTxt,
       onClose: () => {
-        deleteGallery(raw?.id);
+        deleteEvent(raw?.id);
       }
     });
   };
@@ -106,7 +117,7 @@ function Gallery() {
       setLoading(true);
 
       const res: IGlobalResponse =
-        await GalleryServices.getInstance().changeStatus(id);
+        await EventsServices.getInstance().changeStatus(id);
 
       if (res?.isSuccess) {
         setLoading(false);
@@ -131,73 +142,47 @@ function Gallery() {
     </Typography.Paragraph>
   );
 
-  const columns: ColumnsType<IGalleryItem> = [
-    {
-      title: dictionary.az.gallery,
-      dataIndex: 'coverPhoto',
-      key: 'coverPhoto',
-      width: 50,
-      render: record => (
-        <ConfigProvider
-          locale={{
-            locale: 'az',
-            Image: {
-              preview: ''
-            }
-          }}
-        >
-          <Image
-            style={{ objectFit: 'contain' }}
-            height={70}
-            width={70}
-            src={record?.fileUrl ?? defaultImage}
-            alt={record?.name ?? 'image'}
-          />
-        </ConfigProvider>
-      )
-    },
+  const columns: ColumnsType<IEventsItem> = [
     {
       title: dictionary.az.name,
       dataIndex: 'name',
       key: 'name',
+      width: '30%',
       render: record => renderEllipsisText(record)
     },
     {
-      title: dictionary.az.description,
-      dataIndex: 'description',
-      key: 'description',
-      width: '40%',
+      title: dictionary.az.content,
+      dataIndex: 'content',
+      key: 'content',
+      width: '50%',
       render: record => renderEllipsisText(record)
     },
     {
-      title: dictionary.az.createdDate,
-      dataIndex: 'createdDate',
-      key: 'createdDate',
-      render: (date: string) => {
-        const formattedDate = dayjs(date, 'DD/MM/YYYY').format('DD.MM.YYYY');
-        return renderEllipsisText(formattedDate);
-      }
+      title: dictionary.az.language,
+      dataIndex: 'language',
+      key: 'language',
+      render: record => renderEllipsisText(getLanguageName(record ?? 1))
     },
+
     {
       title: dictionary.az.status,
       dataIndex: 'isActive',
       key: 'isActive',
-      render: (record: boolean, raw: IGalleryItem) => (
+      render: (record: boolean, raw: IEventsItem) => (
         <Tooltip placement="top" title="Statusu dəyiş">
           <Switch checked={record} onChange={() => onChangeStatus(raw?.id)} />
         </Tooltip>
       )
     },
-
     {
       dataIndex: '',
       key: 'action',
       width: 130,
       align: 'right',
-      render: (_, raw: IGalleryItem) => (
+      render: (_, raw: IEventsItem) => (
         <Space size="small" align={'center'}>
           <>
-            {/* <Tooltip placement="top" title={dictionary.az.edit}>
+            <Tooltip placement="top" title={dictionary.az.edit}>
               <AppHandledButton
                 style={{
                   display: 'flex',
@@ -208,7 +193,7 @@ function Gallery() {
                 icon={<AiFillEdit />}
                 onClick={() => handleEditClick(raw)}
               />
-            </Tooltip> */}
+            </Tooltip>
             <Tooltip placement="top" title={dictionary.az.delete}>
               <AppHandledButton
                 style={{
@@ -227,22 +212,13 @@ function Gallery() {
     }
   ];
 
-  // const onSubmit: SubmitHandler<IGalleryFilter> = async (
-  //   data: IGalleryFilter
-  // ) => {
-  //   setCurrentPage(1);
-  //   const queryParamsData: IHTTPSParams[] =
-  //     convertFormDataToQueryParams<IGalleryFilter>(data);
-  //   setQueryParams(queryParamsData);
-  //   setRefreshComponent(!refreshComponent);
-  // };
 
   useEffect(() => {
-    fetchGalleryList();
+    fetchEventsList();
   }, [page, refreshComponent]);
 
   return (
-    <div className="galleryContainer">
+    <div className="eventsContainer">
       <Card size="small" className="box box-margin-y">
         <Row justify="space-between" align="middle">
           <Breadcrumb
@@ -255,7 +231,10 @@ function Gallery() {
                 )
               },
               {
-                title: dictionary.az.gallery
+                title: dictionary.az.events
+              },
+              {
+                title: dictionary.az.willBePublished
               }
             ]}
           />
@@ -268,7 +247,7 @@ function Gallery() {
               }}
               loading={loading}
               onClick={() => {
-                setShowAddGalleryModal(true);
+                setShowAddEventModal(true);
               }}
               icon={<AiOutlinePlus />}
             />
@@ -279,32 +258,32 @@ function Gallery() {
       <Spin size="large" spinning={loading}>
         <AppHandledTable
           columns={columns}
-          data={galleryData}
+          data={eventsData}
           currentPage={page}
           totalPage={totalPage}
           onChangePage={(e: number) => setCurrentPage(e)}
           key={forceUpdate.current}
-          rowKey={'id'}
+          rowKey="id"
         />
       </Spin>
 
-      {showAddGalleryModal && (
-        <AddGalleryModal
-          setShowAddGalleryModal={setShowAddGalleryModal}
+      {showAddEventModal && (
+        <AddEventModal
+          setShowAddEventModal={setShowAddEventModal}
           setRefreshComponent={setRefreshComponent}
-          showAddGalleryModal={showAddGalleryModal}
+          showAddEventModal={showAddEventModal}
         />
       )}
-      {showUpdateGalleryModal && selectedItem && (
-        <EditGalleryModal
+      {showUpdateEventModal && selectedItem && (
+        <EditEventModal
           selectedItem={selectedItem}
-          setShowUpdateGalleryModal={setShowUpdateGalleryModal}
+          setShowUpdateEventModal={setShowUpdateEventModal}
           setRefreshComponent={setRefreshComponent}
-          showUpdateGalleryModal={showUpdateGalleryModal}
+          showUpdateEventModal={showUpdateEventModal}
         />
       )}
     </div>
   );
 }
 
-export default Gallery;
+export default EventsPlanned;

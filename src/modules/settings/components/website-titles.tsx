@@ -257,10 +257,10 @@ function WebsiteTitles() {
                     }}
                     rules={{
                       maxLength: {
-                        value: 1000,
+                        value: 500,
                         message: maxLengthCheck(
                           dictionary.az.mainContent,
-                          '1000'
+                          '500'
                         )
                       }
                     }}
@@ -281,10 +281,10 @@ function WebsiteTitles() {
                     }}
                     rules={{
                       maxLength: {
-                        value: 500,
+                        value: 200,
                         message: maxLengthCheck(
                           dictionary.az.mainHeader,
-                          '500'
+                          '200'
                         )
                       }
                     }}
@@ -307,10 +307,10 @@ function WebsiteTitles() {
                     }}
                     rules={{
                       maxLength: {
-                        value: 200,
+                        value: 1000,
                         message: maxLengthCheck(
                           dictionary.az.newsContent,
-                          '200'
+                          '1000'
                         )
                       }
                     }}
@@ -333,10 +333,10 @@ function WebsiteTitles() {
                     }}
                     rules={{
                       maxLength: {
-                        value: 500,
+                        value: 200,
                         message: maxLengthCheck(
                           dictionary.az.newsHeader,
-                          '500'
+                          '200'
                         )
                       }
                     }}

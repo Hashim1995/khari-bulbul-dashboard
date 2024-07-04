@@ -232,6 +232,9 @@ function Events() {
               },
               {
                 title: dictionary.az.events
+              },
+              {
+                title: dictionary.az.alreadyPublished
               }
             ]}
           />

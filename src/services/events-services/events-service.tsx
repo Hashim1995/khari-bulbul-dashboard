@@ -47,6 +47,19 @@ export class EventsServices {
     return res;
   }
 
+  public async getAllPlannedEvents(
+    params: IHTTPSParams[],
+    onError?: ErrorCallBack
+  ): Promise<IGetEventsResponse> {
+    const res = await HttpUtil.get(
+      '/Post/GetAllPlannedEvents',
+      params,
+      false,
+      onError
+    );
+    return res;
+  }
+
   public async getExportToExcel(onError?: ErrorCallBack) {
     const res = await HttpUtil.get('/Post/export-excel', null, false, onError);
     return res;

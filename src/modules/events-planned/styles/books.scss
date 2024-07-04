@@ -1,0 +1,11 @@
+.nomeclaturaContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .createButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+}

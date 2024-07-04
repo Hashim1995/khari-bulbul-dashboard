@@ -130,6 +130,7 @@ export const dictionary = {
     peakTime: 'Pik vaxtı',
     productPreparationCard: 'Məhsul hazırlama kartı',
     ddmmyyyy: 'Gün.Ay.İl',
+    ddmmyyyyHhMm: 'Gün.Ay.İl saat:dəqiqə',
     addNewproductPreparationCard: 'Yeni məhsul hazırlama kartı əlavə edin',
     addNewMainGroup: 'Yeni əsas qrup əlavə edin',
     updateProductPreparationCard: 'Məhsul hazırlama kartı redaktə edin',
@@ -209,13 +210,17 @@ export const dictionary = {
     photoGalleryHeader: 'Foto Qalereya Başlıq',
     websiteTitles: 'Veb sayt başlıqları',
     NewsSubscribers: 'Xəbərlər Abunələri',
-    news: 'xəbərlər',
+    news: 'Xəbərlər',
     eventsContent: "Tədbirlər məzmun",
     eventsHeader: "Tədbirlər başlıq",
     mainContent: "Əsas məzmun",
     mainHeader: "Əsas başlıq",
     newsContent: "Xəbərlər məzmun",
-    newsHeader: "Xəbərlər başlıq"
+    newsHeader: "Xəbərlər başlıq",
+    later: "sonra",
+    publish: "Nəşr et",
+    alreadyPublished: 'Nəşr olunmuş',
+    willBePublished: 'Planlaşdırılmış',
   }
 };
 // export const dictionary = {

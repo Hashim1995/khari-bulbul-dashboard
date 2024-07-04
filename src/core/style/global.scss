@@ -283,3 +283,32 @@ div.notification::-webkit-scrollbar-thumb {
     width: 100% !important;
   }
 }
+
+.ant-menu-inline > .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: #008080;
+  color: #fff !important;
+}
+
+.ant-menu-submenu-title:hover {
+  color: #fff !important;
+}
+
+.ant-menu-vertical > .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: #008080;
+  color: #fff !important;
+}
+
+.ant-menu-item {
+  transition: 0 !important;
+}
+
+.ant-menu-item:hover {
+  transition: 0
+   !important;
+}
+
+.ant-menu-item > .ant-menu-submenu-selected > span{ 
+color: "#fff" !important;
+}
+
+
