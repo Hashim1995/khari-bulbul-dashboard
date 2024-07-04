@@ -307,8 +307,8 @@ div.notification::-webkit-scrollbar-thumb {
    !important;
 }
 
-.ant-menu-item > .ant-menu-submenu-selected > span{ 
-color: "#fff" !important;
+.ant-menu-light>.ant-menu .ant-menu-submenu-selected >.ant-menu-submenu-title  {
+  color: "#fff" !important;
 }
 
 

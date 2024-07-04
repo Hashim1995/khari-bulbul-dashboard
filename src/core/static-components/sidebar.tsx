@@ -1,4 +1,4 @@
-import { Layout, Menu, Image, Typography, } from 'antd';
+import { Layout, Menu, Image, Tooltip, } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import type { MenuProps } from 'antd';
@@ -58,12 +58,9 @@ function Sidebar() {
     ),
 
     getItem(
-      <Typography.Text
-      style={{ fontFamily: 'Montserrat', display: 'block', color: "#000" }}
-      className="typography-margin-none ant-typography-inherit"
-    >
-    {dictionary.az.news}
-    </Typography.Text>,
+      <Tooltip title={   dictionary.az.news}>
+      {dictionary.az.news}
+     </Tooltip>,
       'blogs',
       <MdOutlineArticle size={18} />,
       [
@@ -73,7 +70,8 @@ function Sidebar() {
           <MdOutlineArticle size={18} />,
         ),
         getItem(
-          <Link to="/blogs/planned"> {dictionary.az.willBePublished} </Link>,
+          <Tooltip title={   dictionary.az.willBePublished}>
+          <Link to="/blogs/planned"> {dictionary.az.willBePublished} </Link></Tooltip>,
           '/blogs/planned',
           <MdOutlineArticle size={18} />,
         )
@@ -81,24 +79,25 @@ function Sidebar() {
     ),
 
     getItem(
-      <Typography.Text
-      style={{ fontFamily: 'Montserrat', display: 'block',  }}
-      className="typography-margin-none ant-typography-inherit"
-    >
-    {dictionary.az.events}
-    </Typography.Text>,
+    <Tooltip title={   dictionary.az.events}>
+       {dictionary.az.events}
+      </Tooltip>,
       'events',
       <MdEventNote size={18} />,
       [
         getItem(
+
           <Link to="/events/published"> {dictionary.az.alreadyPublished} </Link>,
           '/events/published',
           <MdEventNote size={18} />,
+          undefined
         ),
         getItem(
-          <Link to="/events/planned"> {dictionary.az.willBePublished} </Link>,
+          <Tooltip title={   dictionary.az.willBePublished}>
+          <Link to="/events/planned"> {dictionary.az.willBePublished} </Link></Tooltip>,
           '/events/planned',
           <MdEventNote size={18} />,
+          undefined
         )
       ],
     ),
