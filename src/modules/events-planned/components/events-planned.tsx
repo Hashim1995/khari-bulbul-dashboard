@@ -24,6 +24,7 @@ import { toast } from 'react-toastify';
 import { IGlobalResponse } from '@/models/common';
 import { useReadLocalStorage } from 'usehooks-ts';
 import AppHandledTable from '@/components/display/table';
+import dayjs from 'dayjs';
 import { IGetEventsResponse, IEventsItem } from '../models';
 import AddEventModal from '../modals/add-event-modal';
 import EditEventModal from '../modals/edit-event-modal';
@@ -154,7 +155,7 @@ function EventsPlanned() {
       title: dictionary.az.content,
       dataIndex: 'content',
       key: 'content',
-      width: '50%',
+      width: '40%',
       render: record => renderEllipsisText(record)
     },
     {
@@ -162,6 +163,16 @@ function EventsPlanned() {
       dataIndex: 'language',
       key: 'language',
       render: record => renderEllipsisText(getLanguageName(record ?? 1))
+    },
+
+    {
+      title: dictionary.az.plannedDate,
+      dataIndex: 'plannedDate',
+      key: 'plannedDate',
+      render: (date: string) => {
+        const formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');
+        return renderEllipsisText(formattedDate);
+      }
     },
 
     {

@@ -221,6 +221,7 @@ export const dictionary = {
     publish: "Nəşr et",
     alreadyPublished: 'Nəşr olunmuş',
     willBePublished: 'Planlaşdırılmış',
+    plannedDate : 'Planlaşdırılan tarix',
   }
 };
 // export const dictionary = {

@@ -166,7 +166,7 @@ function BlogsPlaned() {
       render: record => renderEllipsisText(getLanguageName(record ?? 1))
     },
     {
-      title: dictionary.az.createdDate,
+      title: dictionary.az.plannedDate,
       dataIndex: 'plannedDate',
       key: 'plannedDate',
       render: (date: string) => {
