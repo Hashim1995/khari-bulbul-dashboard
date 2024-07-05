@@ -4,10 +4,12 @@ import { IGlobalResponse } from '@/models/common';
 import { SettingssServices } from '@/services/settings-services/settings-service';
 import { dictionary } from '@/utils/constants/dictionary';
 import { inputPlaceholderText } from '@/utils/constants/texts';
-import { Card, Col, Collapse, Form, Row, Space, Spin, Typography } from 'antd';
+import { Card, Col, Collapse, Form, Row, Space, Spin, Typography, UploadFile } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import AppFileUpload from '@/components/forms/file-upload';
+import { tokenizeImage } from '@/utils/functions/functions';
 import { IContactUs, IGetContactUsResponse } from '../models';
 
 function ContactUs() {
@@ -28,6 +30,7 @@ function ContactUs() {
 
   const [isFormSubmiting, setIsFormSubmiting] = useState<boolean>(false);
   const [refreshComponent, setRefreshComponent] = useState<boolean>(false);
+  const [fileList, setFileList] = useState<any>([]);
   const [skeleton, setSkeleton] = useState(true);
 
   const fetchData = async () => {
@@ -43,6 +46,19 @@ function ContactUs() {
       setValue('facebook', res?.data?.facebook ?? '');
       setValue('instagram', res?.data?.instagram ?? '');
       setValue('website', res?.data?.website ?? '');
+      setValue('coverPhoto', res?.data?.coverPhoto.id ?? null);
+
+      const fetchDataPhoto = async () => {
+        const file = res?.data?.coverPhoto;
+  
+        if (file) {
+          const tokenizedFile = await tokenizeImage(file);
+          setFileList([tokenizedFile]);
+        }
+      };
+  
+      fetchDataPhoto();
+      
       setSkeleton(false);
     }
     setIsFormSubmiting(false);
@@ -56,7 +72,10 @@ function ContactUs() {
         website: data?.website,
         facebook: data?.facebook,
         instagram: data?.instagram,
-        email: data?.email
+        email: data?.email,
+        coverPhoto: data?.coverPhoto
+        ? data?.coverPhoto
+        : fileList[0]?.id ?? null,
       };
 
       const res: IGlobalResponse =
@@ -105,7 +124,7 @@ function ContactUs() {
           >
             {!skeleton ? (
               <Form onFinish={handleSubmit(onSubmit)} layout="vertical">
-                <Row gutter={16}>
+                <Row gutter={[16, 16]}>
                   <Col span={6}>
                     <AppHandledInput
                       label={dictionary.az.email}
@@ -166,6 +185,27 @@ function ContactUs() {
                       )}
                       errors={errors}
                     />
+                  </Col>
+                  <Col span={6}>
+                  <Form.Item label={dictionary.az.aboutUsImage}>
+                  <AppFileUpload
+                  listType="picture-card"
+                  photoLabel={dictionary.az.aboutUsImage}
+                  accept=".jpg, .jpeg, .png, .webp"
+                  length={1}
+                  defaultFileList={fileList}
+                  getValues={(e: UploadFile[]) => {
+                    if (e && e.length > 0) {
+                      const selectedFile = e[0];
+                      const fileData = selectedFile?.response?.data;
+                      fileData && setValue('coverPhoto', fileData?.id);
+                    } else {
+                      setValue('coverPhoto', null);
+                    }
+                  }}
+                  folderType={2}
+                />
+                </Form.Item>
                   </Col>
                 </Row>
                 <Row justify="end">

@@ -222,6 +222,7 @@ export const dictionary = {
     alreadyPublished: 'Nəşr olunmuş',
     willBePublished: 'Planlaşdırılmış',
     plannedDate : 'Planlaşdırılan tarix',
+    aboutUsImage: "Haqqımızda şəkil"
   }
 };
 // export const dictionary = {

@@ -98,8 +98,8 @@ function EditBlogModal({
         typeof data?.language === 'object' && data.language !== null
           ? data.language.value
           : data.language,
-        plannedDate: data.nowOrLater === 2 && data.plannedDate ?   dayjs(data?.plannedDate).format('YYYY-MM-DDTHH:mm:ss') : null
-      };
+          plannedDate: data.nowOrLater === 2 && data.plannedDate ?   dayjs(data?.plannedDate).format('YYYY-MM-DDTHH:mm') :   dayjs(Date.now()).format('YYYY-MM-DDTHH:mm')
+        };
 
       if (contentState?.length < 50) {
         toast.warning(

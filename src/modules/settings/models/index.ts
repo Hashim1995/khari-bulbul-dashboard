@@ -5,6 +5,7 @@ export interface IContactUs {
   email: string | null;
   facebook: string | null;
   instagram: string | null;
+  coverPhoto: any;
 }
 
 export interface IGetContactUsResponse extends IGlobalResponse {
