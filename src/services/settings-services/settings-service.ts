@@ -6,7 +6,9 @@
 
 import { IGlobalResponse } from '@/models/common';
 import {
+  IChangeLogo,
   IContactUs,
+  IGetChangeLogoResponse,
   IGetContactUsResponse,
   IGetWebsiteTitlesResponse,
   IWebsiteTitles
@@ -68,4 +70,20 @@ export class SettingssServices {
     const res = await HttpUtil.put(`/WebsiteTitle`, body, onError);
     return res;
   }
+
+  public async getLogo(
+    onError?: ErrorCallBack
+  ): Promise<IGetChangeLogoResponse> {
+    const res = await HttpUtil.get(`api/Logo`, null, false, onError);
+    return res;
+  }
+
+  public async updateLogo(
+    body: IChangeLogo,
+    onError?: ErrorCallBack
+  ): Promise<IGlobalResponse> {
+    const res = await HttpUtil.put(`/Logo`, body, onError);
+    return res;
+  }
+
 }

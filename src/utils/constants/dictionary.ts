@@ -222,7 +222,9 @@ export const dictionary = {
     alreadyPublished: 'Nəşr olunmuş',
     willBePublished: 'Planlaşdırılmış',
     plannedDate : 'Planlaşdırılan tarix',
-    aboutUsImage: "Haqqımızda şəkil"
+    aboutUsImage: "Haqqımızda şəkili",
+    andOtherSettings: 'və digət tənzimləmələr' ,
+    logoImage: 'Logo şəkili',
   }
 };
 // export const dictionary = {

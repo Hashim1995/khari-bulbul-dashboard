@@ -5,6 +5,7 @@ import { HomeOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import ContactUs from './contact-us';
 import WebsiteTitles from './website-titles';
+import ChangeLogo from './llogo-change';
 
 function Settings() {
   return (
@@ -31,6 +32,7 @@ function Settings() {
       </Card>
       <ContactUs />
       <WebsiteTitles />
+      <ChangeLogo/>
     </div>
   );
 }

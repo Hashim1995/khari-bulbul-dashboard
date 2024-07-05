@@ -27,3 +27,11 @@ export interface IWebsiteTitles {
 export interface IGetWebsiteTitlesResponse extends IGlobalResponse {
   data: IWebsiteTitles;
 }
+
+export interface IChangeLogo {
+  coverPhoto: any;
+}
+
+export interface IGetChangeLogoResponse extends IGlobalResponse {
+  data: IContactUs;
+}
