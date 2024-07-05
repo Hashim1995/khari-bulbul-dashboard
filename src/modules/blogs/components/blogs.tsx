@@ -24,6 +24,7 @@ import { toast } from 'react-toastify';
 import { IGlobalResponse } from '@/models/common';
 import { useReadLocalStorage } from 'usehooks-ts';
 import AppHandledTable from '@/components/display/table';
+import dayjs from 'dayjs';
 import { IGetBlogsResponse, IBlogsItem } from '../models';
 import AddBlogModal from '../modals/add-blog-modal';
 import EditBlogModal from '../modals/edit-blog-modal';
@@ -155,7 +156,7 @@ function Blogs() {
       title: dictionary.az.content,
       dataIndex: 'content',
       key: 'content',
-      width: '50%',
+      width: '40%',
       render: record => renderEllipsisText(record)
     },
     {
@@ -163,6 +164,15 @@ function Blogs() {
       dataIndex: 'language',
       key: 'language',
       render: record => renderEllipsisText(getLanguageName(record ?? 1))
+    },
+    {
+      title: dictionary.az.sharedDate,
+      dataIndex: 'plannedDate',
+      key: 'plannedDate',
+      render: (date: string) => {
+        const formattedDate = dayjs(date).format('DD.MM.YYYY HH:mm');
+        return renderEllipsisText(formattedDate);
+      }
     },
 
     {

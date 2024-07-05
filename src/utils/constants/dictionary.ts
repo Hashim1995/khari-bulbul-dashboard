@@ -222,6 +222,7 @@ export const dictionary = {
     alreadyPublished: 'Nəşr olunmuş',
     willBePublished: 'Planlaşdırılmış',
     plannedDate : 'Planlaşdırılan tarix',
+    sharedDate : 'Paylaşılma vaxtı',
     aboutUsImage: "Haqqımızda şəkili",
     andOtherSettings: 'və digət tənzimləmələr' ,
     logoImage: 'Logo şəkili',
