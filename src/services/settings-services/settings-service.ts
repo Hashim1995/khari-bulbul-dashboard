@@ -74,7 +74,7 @@ export class SettingssServices {
   public async getLogo(
     onError?: ErrorCallBack
   ): Promise<IGetChangeLogoResponse> {
-    const res = await HttpUtil.get(`api/Logo`, null, false, onError);
+    const res = await HttpUtil.get(`/Logo`, null, false, onError);
     return res;
   }
 
