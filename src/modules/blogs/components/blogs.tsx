@@ -4,15 +4,19 @@ import AppHandledButton from '@/components/display/button/handle-button';
 import {
   Breadcrumb,
   Card,
+  Dropdown,
+  MenuProps,
   Row,
   Space,
   Spin,
   Switch,
   Tooltip,
-  Typography
+  Typography,
+  theme
 } from 'antd';
+
 import { Link } from 'react-router-dom';
-import { HomeOutlined } from '@ant-design/icons';
+import { HomeOutlined, DownOutlined } from '@ant-design/icons';
 import { BlogsServices } from '@/services/blogs-services/blogs-service';
 import { AiFillDelete, AiFillEdit, AiOutlinePlus } from 'react-icons/ai';
 import {
@@ -45,6 +49,9 @@ function Blogs() {
   //   }
   // });
 
+  const { useToken } = theme;
+  const { token } = useToken();
+
   const darkMode = useReadLocalStorage('darkTheme');
   const [selectedItem, setSelectedItem] = useState<IBlogsItem>();
   const [showAddBlogModal, setShowAddBlogModal] = useState<boolean>(false);
@@ -56,13 +63,15 @@ function Blogs() {
   const [blogsData, setBlogsData] = useState<IBlogsItem[] | null>(null);
   const [refreshComponent, setRefreshComponent] = useState<boolean>(false);
   const forceUpdate = useRef<number>(0);
+  const [language, setLanguage] = useState<number>(1);
 
   const fetchBlogsList = async () => {
     try {
       setLoading(true);
       const res: IGetBlogsResponse =
-        await BlogsServices.getInstance().getAllBlogs([    // getAllPlanedBlogs
-          { name: 'offset', value: page }
+        await BlogsServices.getInstance().getAllBlogs([
+          { name: 'offset', value: page },
+          { name: 'language', value: language }
         ]);
       if (res?.isSuccess) {
         setBlogsData(res?.data?.data);
@@ -223,32 +232,91 @@ function Blogs() {
     }
   ];
 
+  const languagesOptionsWithIcons: MenuProps['items'] = [
+    {
+      label: 'Az',
+      key: 1
+    },
+    {
+      label: 'Eng',
+      key: 2
+    },
+    {
+      label: 'De',
+      key: 3
+    }
+  ];
+
+  const handleMenuClick: MenuProps['onClick'] = e => {
+    if (e?.key === '1') {
+      setLanguage(1);
+    } else if (e?.key === '2') {
+      setLanguage(2);
+    } else if (e?.key === '3') {
+      setLanguage(3);
+    }
+  };
+
+  const menuProps = {
+    items: languagesOptionsWithIcons,
+    onClick: handleMenuClick
+  };
 
   useEffect(() => {
     fetchBlogsList();
-  }, [page, refreshComponent]);
+  }, [page, refreshComponent, language]);
 
   return (
     <div className="blogsContainer">
       <Card size="small" className="box box-margin-y">
         <Row justify="space-between" align="middle">
-          <Breadcrumb
-            items={[
-              {
-                title: (
-                  <Link to="/home">
-                    <HomeOutlined rev={undefined} />
-                  </Link>
-                )
-              },
-              {
-                title: dictionary.az.news
-              },
-              {
-                title: dictionary.az.alreadyPublished
-              }
-            ]}
-          />
+        <Space size={"large"}>
+            <Breadcrumb
+              items={[
+                {
+                  title: (
+                    <Link to="/home">
+                      <HomeOutlined rev={undefined} />
+                    </Link>
+                  )
+                },
+                {
+                  title: dictionary.az.news
+                },
+                {
+                  title: dictionary.az.alreadyPublished
+                }
+              ]}
+            />
+                <Dropdown menu={menuProps} trigger={['click']}>
+              <AppHandledButton
+                style={{
+                  borderColor: token.colorPrimary,
+                  color: token.colorPrimaryText,
+                  width: '80px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+                type="default"
+              >
+                <span
+                  style={{
+                    flex: 1,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}
+                >
+                  {getLanguageName(language)}
+                </span>
+                <DownOutlined rev={undefined} />
+              </AppHandledButton>
+            </Dropdown>
+          </Space>
+
           <Tooltip placement="right" title={dictionary.az.addBtn}>
             <AppHandledButton
               style={{
@@ -297,4 +365,4 @@ function Blogs() {
   );
 }
 
-export default Blogs; 
+export default Blogs;
