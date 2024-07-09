@@ -54,6 +54,7 @@ function AppHandledInput({
                 onChangeApp && onChangeApp(e);
               }}
               value={value}
+              status={required && errors[name] ? 'error' : undefined}
               placeholder={placeholder || ''}
               {...inputProps}
             />
