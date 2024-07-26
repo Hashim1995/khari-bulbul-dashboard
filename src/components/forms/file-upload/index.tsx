@@ -193,8 +193,9 @@ function AppFileUpload({
         </Upload>
       </div>
 
-      {previewImage?.mimeType === 'image/jpeg' ||
-      previewImage?.type === 'image/jpeg' ? (
+      {previewImage?.mimeType?.includes('image') ||
+      previewImage?.type?.includes('image') ?
+ (
         <Modal
           open={previewOpen}
           title={photoLabel}

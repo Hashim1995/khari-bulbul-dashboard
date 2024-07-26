@@ -25,6 +25,8 @@ import AppFileUpload from '@/components/forms/file-upload';
 import AppHandledDate from '@/components/forms/date/handled-date';
 import dayjs from 'dayjs';
 import AppHandledRadio from '@/components/forms/radio/handled-radio';
+import AppHandledSelect from '@/components/forms/select/handled-select';
+import { languagesOptionsWithIcons } from '@/modules/blogs/modals/add-blog-modal';
 import { IAddEventForm, IEventsItem } from '../models';
 
 interface IUpdateEventProps {
@@ -52,6 +54,7 @@ function EditBookModal({
       description: selectedItem?.content,
       showOnFirstScreen: selectedItem?.showOnFirstScreen,
       nowOrLater: selectedItem?.nowOrLater,
+      language: selectedItem?.language,
     },
     mode: 'onChange'
   });
@@ -94,6 +97,10 @@ function EditBookModal({
           : fileList[0]?.id ?? null,
         postType: 2,
         nowOrLater: data?.nowOrLater,
+        language:
+        typeof data?.language === 'object' && data.language !== null
+          ? data.language.value
+          : data.language,
         plannedDate: data.nowOrLater === 2 && data.plannedDate ?   dayjs(data?.plannedDate).format('YYYY-MM-DDTHH:mm') :   dayjs(Date.now()).format('YYYY-MM-DDTHH:mm')
   
       };
@@ -178,6 +185,25 @@ function EditBookModal({
         onFinish={handleSubmit(onSubmit)}
       >
         <Row gutter={[16, 16]}>
+        <Col span={2.5}>
+            <AppHandledSelect
+              label={dictionary.az.language}
+              name="language"
+              control={control}
+              errors={errors}
+              selectProps={{
+                // defaultValue: languagesOptions[0],
+                id: 'language',
+                className: 'w-full',
+                style: {
+                  display: 'flex',
+                  alignContent: 'center',
+                  justifyContent: 'center'
+                },
+                options: languagesOptionsWithIcons
+              }}
+            />
+          </Col>
         <Col span={24}>
               <AppHandledInput
                 label={dictionary.az.name}

@@ -18,6 +18,7 @@ export interface IEventsItem {
   coverPhoto: any;
   nowOrLater: 1 | 2;
   plannedDate?:any;
+  language?: number | any;
 }
 
 export interface IAddEventForm {

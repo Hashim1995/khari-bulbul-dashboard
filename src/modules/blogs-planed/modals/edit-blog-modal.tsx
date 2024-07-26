@@ -26,7 +26,9 @@ import dayjs from 'dayjs';
 import AppFileUpload from '@/components/forms/file-upload';
 import AppHandledDate from '@/components/forms/date/handled-date';
 import AppHandledRadio from '@/components/forms/radio/handled-radio';
+import AppHandledSelect from '@/components/forms/select/handled-select';
 import { IAddBlogForm, IBlogsItem } from '../models';
+import { languagesOptionsWithIcons } from './add-blog-modal';
 
 interface IUpdateBlogProps {
   selectedItem: IBlogsItem;
@@ -54,6 +56,7 @@ function EditBlogModal({
       showOnFirstScreen: selectedItem?.showOnFirstScreen,
       // coverPhoto: selectedItem?.coverPhoto,
       nowOrLater: selectedItem?.nowOrLater,
+      language: selectedItem?.language,
       // plannedDate: selectedItem?.plannedDate,
     },
     mode: 'onChange'
@@ -179,6 +182,25 @@ function EditBlogModal({
         onFinish={handleSubmit(onSubmit)}
       >
         <Row gutter={[16, 16]}>
+        <Col span={2.5}>
+            <AppHandledSelect
+              label={dictionary.az.language}
+              name="language"
+              control={control}
+              errors={errors}
+              selectProps={{
+                // defaultValue: languagesOptions[0],
+                id: 'language',
+                className: 'w-full',
+                style: {
+                  display: 'flex',
+                  alignContent: 'center',
+                  justifyContent: 'center'
+                },
+                options: languagesOptionsWithIcons
+              }}
+            />
+          </Col>
         <Col span={24}>
               <AppHandledInput
                 label={dictionary.az.name}
